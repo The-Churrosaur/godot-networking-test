@@ -38,6 +38,8 @@ var gravity_area : Area2D = null
 
 # global per-tick movement vector
 var displacement : Vector2
+var last_position : Vector2
+var mns_displacement : Vector2
 
 func _ready():
 	# test, start by moving down, facing up
@@ -86,7 +88,7 @@ func _physics_process(delta):
 		
 		# move 
 		var snap_vector = platform_normal * -50
-		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, PI, false)
+		mns_displacement = move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, PI, false)
 		
 		# set flags and delta velocity for next move --
 		
@@ -107,9 +109,16 @@ func _physics_process(delta):
 		
 		# keep velocity relative to moving platform
 		# redundant to snap for non-rotating objects TODO
-		print(is_on_floor())
-		print(get_floor_velocity())
-		displacement += get_floor_velocity()
+		var floor_velocity = get_floor_velocity() * 1.1
+		if floor_velocity.length_squared() < 10000:
+			displacement += floor_velocity
+		else:
+			print(floor_velocity)
+		
+
+		
+		# update last position
+		last_position = position
 		
 		# update normal --
 		

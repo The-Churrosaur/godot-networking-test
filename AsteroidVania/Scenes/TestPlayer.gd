@@ -2,11 +2,11 @@ extends RigidBody2D
 
 # movement params
 
-export var magwalk_velocity = 10
+export var magwalk_velocity = 100
 export var magwalk_acceleration = 10 # impulse/tick
 export var magwalk_deceleration = 10
 export var magwalk_rotation = 1 # rad/se
-export var magboot_suction = 1 # impulse/tick towards floor
+export var magboot_suction = 10 # impulse/tick towards floor
 
 # public control flags, write with character or ai controller
 
