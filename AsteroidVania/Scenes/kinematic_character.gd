@@ -1,0 +1,190 @@
+class_name KinematicCharacter
+extends KinematicBody2D
+
+# params
+
+export var magwalk_velocity = 100 # pixels/tick
+export var magwalk_gravity = 10 # velocity towards surface
+export var magwalk_ang_lerp = 0.2
+export var jump_velocity = 100
+export var gravity_ang_lerp = 0.05
+
+# control flags - write from player/ai controller 
+
+var should_magwalk_left = false
+var should_magwalk_right = false
+var magwalk_enabled = true # if false overridden by planet gravity
+
+var should_jump = false # auto resets
+var jump_towards = Vector2(0,0)
+
+# platform information
+
+var on_platform = false
+var platform = null
+var platform_normal : Vector2
+var platform_collision : KinematicCollision2D
+var just_landed = false # auto resets
+
+# physics dummy
+
+onready var physics_dummy_preload = preload("res://Scenes/CharacterPhysicsDummy.tscn")
+var physics_dummy_instance : RigidBody2D = null
+var physics_dummy_spawned = false
+
+# physics dummy gravity
+var in_gravity = false
+var gravity_area : Area2D = null
+
+# global per-tick movement vector
+var displacement : Vector2
+
+func _ready():
+	# test, start by moving down, facing up
+	displacement = Vector2(0,40) 
+	platform_normal = Vector2(0,-1)
+
+func _physics_process(delta):
+	
+	# if floating - 
+	# follow dummy, moveandcollide, rotate to gravity
+	if !on_platform : 
+		
+		# if dummy -
+		# set dv to physics dummy velocity
+		if physics_dummy_spawned:
+			displacement = physics_dummy_instance.linear_velocity
+			
+			# if in grav, rotate feet to planet
+			if in_gravity && gravity_area != null:
+				var target : Vector2
+				# if point
+				if gravity_area.gravity_point:
+					target = gravity_area.position - position
+				# if linear
+				else:
+					target = gravity_area.gravity_vec
+				# rotate
+				rotation = lerp_angle(rotation, target.angle() - PI/2, gravity_ang_lerp)
+		
+		# move
+		var collision =  move_and_collide(displacement * delta, false)
+		
+		# on collide
+		if (collision != null):
+			print("collision")
+			# gravityplatforms override
+			if (collision.collider.is_in_group("GravityPlatform") || 
+				magwalk_enabled && collision.collider.is_in_group("Platform")):
+				enter_platform(collision)
+	
+	# if on platform - 
+	# handle snapping, magbooting, jumping
+	else: 
+		
+		# move, then reset displacement for next tick --
+		
+		# move 
+		var snap_vector = platform_normal * -50
+		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, PI, false)
+		
+		# set flags and delta velocity for next move --
+		
+		# lerp rotate to normal - how does this work lol 
+		rotation = lerp_angle(rotation, platform_normal.angle() + PI/2, magwalk_ang_lerp)
+		
+		# reset velocity
+		displacement = Vector2(0,0)
+		
+		# push towards platform
+		displacement += -platform_normal * magwalk_gravity
+		
+		# add magwalk velocity tangent to normal
+		if should_magwalk_left:
+			displacement += -platform_normal.rotated(PI/2) * magwalk_velocity
+		if should_magwalk_right:
+			displacement += platform_normal.rotated(PI/2) * magwalk_velocity
+		
+		# keep velocity relative to moving platform
+		# redundant to snap for non-rotating objects TODO
+		print(is_on_floor())
+		print(get_floor_velocity())
+		displacement += get_floor_velocity()
+		
+		# update normal --
+		
+		# if just landed, use normal from previous loop collision
+		if just_landed:
+			print("just landed")
+			just_landed = false
+		# else check moveandslide
+		else:
+			platform_normal = get_floor_normal()
+			# if broke away from platform last tick
+			if platform_normal == Vector2(0,0):
+				print("boing")
+				leave_platform()
+	
+	# jump - leaves platform and punts the dummy
+	if (should_jump):
+		should_jump = false # reset flag
+		print("jumping")
+		leave_platform()
+		
+		# punt dummy
+		var impulse = (jump_towards - position).normalized() * jump_velocity
+		if physics_dummy_spawned:
+			physics_dummy_instance.apply_central_impulse(impulse)
+		else:
+			print("the physics dummy is missing")
+		
+
+func enter_platform(collision : KinematicCollision2D):
+	print("entering platform: ", collision.normal)
+	platform = collision.collider
+	platform_normal = collision.normal
+	platform_collision = collision
+	
+	just_landed = true
+	on_platform = true
+	
+	despawn_physics_dummy()
+
+func leave_platform():
+	print("leaving platform")
+	platform_normal = Vector2(0,0)
+	on_platform = false
+	
+	spawn_physics_dummy()
+
+func spawn_physics_dummy():
+	
+	if physics_dummy_instance != null:
+		print("physics dummy already exists")
+		return
+	
+	physics_dummy_instance = physics_dummy_preload.instance()
+	physics_dummy_instance.position = position
+	get_parent().add_child(physics_dummy_instance)
+	physics_dummy_spawned = true
+	
+	physics_dummy_instance.connect("gravity_area_entered", self, "on_dummy_enter_grav")
+	physics_dummy_instance.connect("gravity_area_left", self, "on_dummy_leave_grav")
+
+func despawn_physics_dummy():
+	
+	if physics_dummy_instance != null:
+		get_parent().remove_child(physics_dummy_instance)
+		physics_dummy_instance.queue_free()
+		physics_dummy_instance = null
+		physics_dummy_spawned = false
+	else:
+		print("physics dummy already null")
+
+func on_dummy_enter_grav(area):
+	in_gravity = true
+	gravity_area = area
+
+func on_dummy_leave_grav(area):
+	in_gravity = false
+	gravity_area = null
