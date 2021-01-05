@@ -28,7 +28,7 @@ var just_landed = false # auto resets
 
 # physics dummy
 
-onready var physics_dummy_preload = preload("res://Scenes/CharacterPhysicsDummy.tscn")
+onready var physics_dummy_preload = preload("res://Scenes/character/CharacterPhysicsDummy.tscn")
 var physics_dummy_instance : RigidBody2D = null
 var physics_dummy_spawned = false
 
@@ -141,7 +141,7 @@ func match_surface_velocity() -> bool:
 	
 	if platform is RigidBody2D:
 		angular_velocity = platform.angular_velocity
-	if platform.is_in_group("DummyPlatform"):
+	if platform.is_in_group("WalkableSurface"):
 		angular_velocity = platform.physics_dummy_instance.angular_velocity
 	else:
 		return false

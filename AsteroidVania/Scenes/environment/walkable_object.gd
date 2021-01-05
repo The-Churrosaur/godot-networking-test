@@ -1,8 +1,8 @@
-class_name DummyPlatform
+class_name WalkableObject
 extends KinematicBody2D
 
 onready var collider = $CollisionShape2D
-onready var phyics_dummy_preload = preload("res://platform_physics_dummy.tscn")
+onready var phyics_dummy_preload = preload("res://Scenes/environment/walkable_object_dummy.tscn")
 
 var physics_dummy_instance : RigidBody2D = null
 var first_tick = true

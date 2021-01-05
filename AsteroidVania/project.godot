@@ -9,31 +9,31 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
-"class": "DummyPlatform",
-"language": "GDScript",
-"path": "res://dummy_platform.gd"
-}, {
 "base": "Area2D",
 "class": "GravityArea",
 "language": "GDScript",
-"path": "res://Scenes/gravity_area.gd"
+"path": "res://Scenes/environment/gravity_area.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "KinematicCharacter",
 "language": "GDScript",
-"path": "res://Scenes/kinematic_character.gd"
+"path": "res://Scenes/character/kinematic_character.gd"
 }, {
 "base": "Node2D",
 "class": "PlayerController",
 "language": "GDScript",
-"path": "res://player_controller.gd"
+"path": "res://Scenes/character/player_controller.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "WalkableObject",
+"language": "GDScript",
+"path": "res://Scenes/environment/walkable_object.gd"
 } ]
 _global_script_class_icons={
-"DummyPlatform": "",
 "GravityArea": "",
 "KinematicCharacter": "",
-"PlayerController": ""
+"PlayerController": "",
+"WalkableObject": ""
 }
 
 [application]
