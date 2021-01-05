@@ -1,11 +1,19 @@
-class_name WalkableObject
+class_name PhysicsPlatform
 extends KinematicBody2D
 
-onready var collider = $CollisionShape2D
-onready var phyics_dummy_preload = preload("res://Scenes/environment/walkable_object_dummy.tscn")
+export var colliders_group = "PhysicsPlatformCollider"
+onready var phyics_dummy_preload = preload("res://Scenes/environment/physics_platform_dummy.tscn")
 
 var physics_dummy_instance : RigidBody2D = null
+var colliders = []
 var first_tick = true
+
+func _ready():
+	
+	# add all named colliders to array
+	for node in get_children():
+		if node.is_in_group(colliders_group):
+			colliders.append(node)
 
 func _physics_process(delta):
 	
@@ -28,11 +36,19 @@ func _physics_process(delta):
 	
 func setup_dummy():
 	
+	# startup dummy
+	
 	physics_dummy_instance = phyics_dummy_preload.instance()
 	physics_dummy_instance.position = position
 	get_parent().add_child(physics_dummy_instance)
 	
-	var instance_collider = CollisionShape2D.new()
-	instance_collider.shape = collider.shape
-	physics_dummy_instance.add_child(instance_collider)
+	# setup dummy colliders from array
+	
+	for node in colliders:
+		if !node is CollisionShape2D:
+			print ("junk in collider array")
+			return
+		var instance_collider = CollisionShape2D.new()
+		instance_collider.shape = node.shape
+		physics_dummy_instance.add_child(instance_collider)
 

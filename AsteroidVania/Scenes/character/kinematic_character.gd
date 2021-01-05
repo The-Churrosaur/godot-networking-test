@@ -58,19 +58,10 @@ func _physics_process(delta):
 			displacement = physics_dummy_instance.linear_velocity
 			
 			# if in grav, rotate feet to planet
-			if in_gravity && gravity_area != null:
-				var target : Vector2
-				# if point
-				if gravity_area.gravity_point:
-					target = gravity_area.position - position
-				# if linear
-				else:
-					target = gravity_area.gravity_vec
-				# rotate
-				rotation = lerp_angle(rotation, target.angle() - PI/2, gravity_ang_lerp)
+			rotate_towards_grav()
 		
 		# move
-		var collision =  move_and_collide(displacement * delta, false, false, false)
+		var collision =  move_and_collide(displacement * delta, false)
 		
 		# on collide
 		if (collision != null):
@@ -131,7 +122,19 @@ func _physics_process(delta):
 
 # PHYSICS_UPDATE HELPER METHODS --
 
-
+# if in grav, rotate feet to planet
+func rotate_towards_grav():
+	
+	if in_gravity && gravity_area != null:
+		var target : Vector2
+		# if point
+		if gravity_area.gravity_point:
+			target = gravity_area.position - position
+		# if linear
+		else:
+			target = gravity_area.gravity_vec
+		# rotate
+		rotation = lerp_angle(rotation, target.angle() - PI/2, gravity_ang_lerp)
 
 # for rotating platforms, calculates surface velocity and matches
 func match_surface_velocity() -> bool:

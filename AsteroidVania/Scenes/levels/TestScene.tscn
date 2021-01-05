@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/levels/TestScene.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/environment/gravity_area.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/environment/test_kinematic_planet.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/environment/walkable_object.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/environment/physics_platform.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 212.791, 10 )
@@ -18,6 +18,9 @@ radius = 125.0
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 200.0
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 50, 50 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
@@ -108,3 +111,8 @@ position = Vector2( 200, 500 )
 
 [node name="DummyPlatform" parent="." instance=ExtResource( 6 )]
 position = Vector2( 500, 300 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform" groups=[
+"PhysicsPlatformCollider",
+]]
+shape = SubResource( 5 )

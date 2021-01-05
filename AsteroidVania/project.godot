@@ -19,21 +19,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/character/kinematic_character.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "PhysicsPlatform",
+"language": "GDScript",
+"path": "res://Scenes/environment/physics_platform.gd"
+}, {
 "base": "Node2D",
 "class": "PlayerController",
 "language": "GDScript",
 "path": "res://Scenes/character/player_controller.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "WalkableObject",
-"language": "GDScript",
-"path": "res://Scenes/environment/walkable_object.gd"
 } ]
 _global_script_class_icons={
 "GravityArea": "",
 "KinematicCharacter": "",
-"PlayerController": "",
-"WalkableObject": ""
+"PhysicsPlatform": "",
+"PlayerController": ""
 }
 
 [application]
