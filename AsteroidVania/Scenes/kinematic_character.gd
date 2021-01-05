@@ -70,7 +70,7 @@ func _physics_process(delta):
 				rotation = lerp_angle(rotation, target.angle() - PI/2, gravity_ang_lerp)
 		
 		# move
-		var collision =  move_and_collide(displacement * delta, false)
+		var collision =  move_and_collide(displacement * delta, false, false, false)
 		
 		# on collide
 		if (collision != null):
@@ -88,7 +88,7 @@ func _physics_process(delta):
 		
 		# move 
 		var snap_vector = platform_normal * -50
-		mns_displacement = move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, PI, false)
+		mns_displacement = move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, 4*PI, false)
 		
 		# set flags and delta velocity for next move --
 		
@@ -103,22 +103,12 @@ func _physics_process(delta):
 		
 		# add magwalk velocity tangent to normal
 		if should_magwalk_left:
-			displacement += -platform_normal.rotated(PI/2) * magwalk_velocity
+			displacement += platform_normal.tangent() * magwalk_velocity
 		if should_magwalk_right:
-			displacement += platform_normal.rotated(PI/2) * magwalk_velocity
+			displacement += -platform_normal.tangent() * magwalk_velocity
 		
-		# keep velocity relative to moving platform
-		# redundant to snap for non-rotating objects TODO
-		var floor_velocity = get_floor_velocity() * 1.1
-		if floor_velocity.length_squared() < 10000:
-			displacement += floor_velocity
-		else:
-			print(floor_velocity)
-		
-
-		
-		# update last position
-		last_position = position
+		# for rotating platforms, calculates surface velocity and matches --
+		var rotating_surface = match_surface_velocity()
 		
 		# update normal --
 		
@@ -136,17 +126,53 @@ func _physics_process(delta):
 	
 	# jump - leaves platform and punts the dummy
 	if (should_jump):
-		should_jump = false # reset flag
-		print("jumping")
-		leave_platform()
+		jump()
 		
-		# punt dummy
-		var impulse = (jump_towards - position).normalized() * jump_velocity
-		if physics_dummy_spawned:
-			physics_dummy_instance.apply_central_impulse(impulse)
-		else:
-			print("the physics dummy is missing")
-		
+
+# PHYSICS_UPDATE HELPER METHODS --
+
+
+
+# for rotating platforms, calculates surface velocity and matches
+func match_surface_velocity() -> bool:
+	
+	var radius = position - platform.position
+	var angular_velocity
+	
+	if platform is RigidBody2D:
+		angular_velocity = platform.angular_velocity
+	if platform.is_in_group("DummyPlatform"):
+		angular_velocity = platform.physics_dummy_instance.angular_velocity
+	else:
+		return false
+	
+	var tangent_normal = radius.tangent().normalized()
+	var surface_vel = - radius.length() * angular_velocity * tangent_normal
+	displacement += surface_vel
+	
+	return true
+	
+	# old implementation - here to reduce clutter
+# 	keep velocity relative to moving platform
+# 	redundant to snap for non-rotating objects TODO
+#		var floor_velocity = get_floor_velocity()
+#		if floor_velocity.length_squared() < 0:
+#			displacement += floor_velocity
+#		else:
+#			print(floor_velocity)
+
+# jump - leaves platform and punts the dummy
+func jump():
+	should_jump = false # reset flag
+	print("jumping")
+	leave_platform()
+	
+	# punt dummy
+	var impulse = (jump_towards - position).normalized() * jump_velocity
+	if physics_dummy_spawned:
+		physics_dummy_instance.apply_central_impulse(impulse)
+	else:
+		print("the physics dummy is missing")
 
 func enter_platform(collision : KinematicCollision2D):
 	print("entering platform: ", collision.normal)
@@ -165,6 +191,8 @@ func leave_platform():
 	on_platform = false
 	
 	spawn_physics_dummy()
+
+# PHYSICS DUMMY METHODS --
 
 func spawn_physics_dummy():
 	
@@ -197,3 +225,5 @@ func on_dummy_enter_grav(area):
 func on_dummy_leave_grav(area):
 	in_gravity = false
 	gravity_area = null
+
+
