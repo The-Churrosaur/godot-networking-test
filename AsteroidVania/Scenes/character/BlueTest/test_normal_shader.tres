@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/character/BlueTest/Bluestronaut_uv_normal.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "// Mandatory line to define 2D shaders
+shader_type canvas_item;
+
+// Allows us to assign a normal map to the shader in the Inspector
+uniform sampler2D normal_map;
+
+void fragment(){
+	// Converts the texture data into a unit vector, with each channel in the [-1, 1] range
+
+NORMAL = 2.0 * texture(normal_map, UV).rgb - 1.0;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/normal_map = ExtResource( 1 )
