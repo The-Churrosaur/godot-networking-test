@@ -141,9 +141,9 @@ func _physics_process(delta):
 func add_magwalk_direction(direction):
 	magwalk_dir += direction
 func add_maneuver_direction(direction):
-	print(rotation)
+#	print(rotation)
 	maneuver_dir += direction
-	print(maneuver_dir)
+#	print(maneuver_dir)
 	
 
 # if in grav, rotate feet to planet

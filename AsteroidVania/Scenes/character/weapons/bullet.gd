@@ -29,10 +29,10 @@ func on_life_timer():
 
 func on_body_entered(body):
 	
-	# temp, just delete
-	print(linear_velocity)
-#	if body is RigidBody2D:
-#		body.apply_central_impulse(linear_velocity.normalized() * impact_impulse)
+	# test with turrets
+	if body.is_in_group("TestTurret"):
+		body.teleport()
+	
 	destroy()
 
 func destroy():

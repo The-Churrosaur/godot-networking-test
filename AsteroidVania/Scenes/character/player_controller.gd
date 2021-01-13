@@ -1,8 +1,6 @@
 class_name PlayerController
 extends Node2D
 
-
-
 export var character_path : NodePath
 export var weapon_path : NodePath
 

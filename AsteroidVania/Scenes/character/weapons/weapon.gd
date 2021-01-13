@@ -49,12 +49,12 @@ func fire_projectile():
 	# handler handles parenting to level
 	emit_signal("bullet_spawned", self, projectile, projectile.name)
 	
-	assert (projectile is RigidBody2D)
-	
 	# fire at target
-	var shot = (target - muzzle.global_position).normalized() * impulse
-	projectile.rotation = shot.angle()
-	projectile.apply_central_impulse(shot)
+	
+	if (projectile is RigidBody2D):
+		var shot = (target - muzzle.global_position).normalized() * impulse
+		projectile.rotation = shot.angle()
+		projectile.apply_central_impulse(shot)
 
 func pull_trigger():
 	trigger_held = true

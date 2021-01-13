@@ -19,6 +19,7 @@ scale = Vector2( 0.6, 0.6 )
 
 [node name="Weapon" parent="." index="4" instance=ExtResource( 4 )]
 muzzle_path = NodePath("Muzzle")
+impulse = 1000.0
 
 [node name="Muzzle" type="Node2D" parent="Weapon" index="1"]
 position = Vector2( -12.1749, -37.0657 )
