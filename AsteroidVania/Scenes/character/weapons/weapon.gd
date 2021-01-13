@@ -44,6 +44,7 @@ func fire_projectile():
 	
 	# spawn projectile
 	var projectile = bullet_prefab.instance()
+	projectile.global_position = muzzle.global_position
 	
 	# handler handles parenting to level
 	emit_signal("bullet_spawned", self, projectile, projectile.name)
@@ -51,7 +52,6 @@ func fire_projectile():
 	assert (projectile is RigidBody2D)
 	
 	# fire at target
-	projectile.global_position = muzzle.global_position
 	var shot = (target - muzzle.global_position).normalized() * impulse
 	projectile.rotation = shot.angle()
 	projectile.apply_central_impulse(shot)

@@ -2,6 +2,9 @@ class_name PhysicsPlatform
 extends KinematicBody2D
 
 export var colliders_group = "PhysicsPlatformCollider"
+export var initial_velocity : Vector2
+export var initial_velocity_angular : float
+
 onready var phyics_dummy_preload = preload("res://Scenes/environment/physics_platform_dummy.tscn")
 
 var physics_dummy_instance : RigidBody2D = null
@@ -51,4 +54,9 @@ func setup_dummy():
 		var instance_collider = CollisionShape2D.new()
 		instance_collider.shape = node.shape
 		physics_dummy_instance.add_child(instance_collider)
+	
+	# feed dummy initial params
+	
+	physics_dummy_instance.linear_velocity = initial_velocity
+	physics_dummy_instance.angular_velocity = initial_velocity_angular
 

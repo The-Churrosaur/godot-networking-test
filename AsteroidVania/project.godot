@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/environment/physics_platform.gd"
 }, {
+"base": "Camera2D",
+"class": "PlayerCamera",
+"language": "GDScript",
+"path": "res://Scenes/environment/player_camera.gd"
+}, {
 "base": "Node2D",
 "class": "PlayerController",
 "language": "GDScript",
@@ -44,6 +49,7 @@ _global_script_class_icons={
 "GravityArea": "",
 "KinematicCharacter": "",
 "PhysicsPlatform": "",
+"PlayerCamera": "",
 "PlayerController": "",
 "Weapon": ""
 }

@@ -103,7 +103,7 @@ func _physics_process(delta):
 	else: 
 		#rotate to platform
 		rotation = lerp_angle(rotation, platform_normal.angle() + PI/2, magwalk_ang_lerp)
-		var snap_vector = platform_normal * -50
+		var snap_vector = platform_normal * -100
 		
 		# reset velocity
 		displacement = Vector2(0,0)
@@ -134,9 +134,6 @@ func _physics_process(delta):
 			should_jump = false
 			if boost_limited:
 				boosts -= 1
-	
-	# boost - directional impulse by WASD if not walking
-		#dodge(position + boost_dir.rotated(rotation), boost_impulse)
 		
 
 # PHYSICS_UPDATE HELPER METHODS --

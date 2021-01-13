@@ -8,7 +8,6 @@
 
 [node name="KinematicCharacter" instance=ExtResource( 1 )]
 magwalk_velocity = 250
-jump_velocity = 300
 
 [node name="PlayerController" parent="." index="2" instance=ExtResource( 3 )]
 character_path = NodePath("..")
