@@ -3,24 +3,24 @@ extends KinematicBody2D
 
 # params
 
+export var rotational_velocity = 0
+export var rotational_speed = PI/64
 export var magwalk_velocity = 100 # pixels/tick
 export var magwalk_gravity = 10 # velocity towards surface
 export var magwalk_ang_lerp = 0.2
-export var jump_velocity = 100
+export var jump_impulse = 300
 export var gravity_ang_lerp = 0.05
 export var dodge_distance = 100
-export var boost_impulse = 100
+export var maneuver_strength = 10
 
 export var boost_limited = true # boost as double jump
 export var boost_number = 3
 
 # control flags - write from player/ai controller 
 
-var should_magwalk_left = false
-var should_magwalk_right = false
+var magwalk_dir : Vector2 = Vector2(0,0)
+var maneuver_dir : Vector2 = Vector2(0,0)
 
-var should_boost = false
-var boost_dir : Vector2 = Vector2(0,0)
 
 var magwalk_enabled = true # if false overridden by planet gravity
 var should_jump = false # auto resets
@@ -47,7 +47,10 @@ var gravity_area : Area2D = null
 
 # global per-tick movement vector
 
+
 var displacement : Vector2
+var magwalk_displacement : Vector2
+var maneuver_impulse : Vector2
 var velocity : Vector2
 var last_position : Vector2 = position
 var mns_displacement : Vector2
@@ -60,6 +63,8 @@ func _ready():
 	# test, start by moving down, facing up
 	displacement = Vector2(0,40) 
 	platform_normal = Vector2(0,-1)
+	#spawn_physics_dummy()
+	
 
 func _physics_process(delta):
 	
@@ -74,13 +79,16 @@ func _physics_process(delta):
 		# if dummy -
 		# set dv to physics dummy velocity
 		if physics_dummy_spawned:
+			physics_dummy_instance.apply_central_impulse(maneuver_dir.rotated(rotation).normalized() * maneuver_strength);
 			displacement = physics_dummy_instance.linear_velocity
 			
-			# if in grav, rotate feet to planet
-			#rotate_towards_grav()
+		# if in grav, rotate feet to planet
+		rotate_towards_grav()
 		
-		# move
+		
+		
 		var collision =  move_and_collide(displacement * delta, false)
+		rotation += rotational_velocity
 		
 		# on collide
 		if (collision != null):
@@ -93,17 +101,9 @@ func _physics_process(delta):
 	# if on platform - 
 	# handle snapping, magbooting, jumping
 	else: 
-		
-		# move, then reset displacement for next tick --
-		
-		# move 
-		var snap_vector = platform_normal * -50
-		mns_displacement = move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, 4*PI, false)
-		
-		# set flags and delta velocity for next move --
-		
-		# lerp rotate to normal - how does this work lol 
+		#rotate to platform
 		rotation = lerp_angle(rotation, platform_normal.angle() + PI/2, magwalk_ang_lerp)
+		var snap_vector = platform_normal * -50
 		
 		# reset velocity
 		displacement = Vector2(0,0)
@@ -111,17 +111,15 @@ func _physics_process(delta):
 		# push towards platform
 		displacement += -platform_normal * magwalk_gravity
 		
-		# add magwalk velocity tangent to normal
-		if should_magwalk_left:
-			displacement += platform_normal.tangent() * magwalk_velocity
-		if should_magwalk_right:
-			displacement += -platform_normal.tangent() * magwalk_velocity
+		# add displacement from magwalking
+		displacement += platform_normal.tangent() * magwalk_velocity * -magwalk_dir[0]
 		
 		# for rotating platforms, calculates surface velocity and matches --
-		var rotating_surface = match_surface_velocity()
+		match_surface_velocity()
 		
 		# update normal --
 		update_normal()
+		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, 4*PI, false)
 	
 	# jump - leaves platform and punts the dummy
 	if (should_jump):
@@ -129,17 +127,27 @@ func _physics_process(delta):
 			print("out of boosts")
 			should_jump = false
 		else:
-			if on_platform: jump(jump_towards, jump_velocity)
-			else: dodge(jump_towards, jump_velocity)
+			if on_platform: 
+				leave_platform(500)
+				jump(jump_towards, jump_impulse)
+			else: jump(jump_towards, jump_impulse, true)
 			should_jump = false
-			boosts -= 1
+			if boost_limited:
+				boosts -= 1
 	
 	# boost - directional impulse by WASD if not walking
-	if should_boost && !on_platform:
-		dodge(position + boost_dir.rotated(rotation), boost_impulse)
-		should_boost = false
+		#dodge(position + boost_dir.rotated(rotation), boost_impulse)
+		
 
 # PHYSICS_UPDATE HELPER METHODS --
+
+func add_magwalk_direction(direction):
+	magwalk_dir += direction
+func add_maneuver_direction(direction):
+	print(rotation)
+	maneuver_dir += direction
+	print(maneuver_dir)
+	
 
 # if in grav, rotate feet to planet
 func rotate_towards_grav():
@@ -148,12 +156,12 @@ func rotate_towards_grav():
 		var target : Vector2
 		# if point
 		if gravity_area.gravity_point:
-			target = gravity_area.position - position
+			target = gravity_area.global_position - position
 		# if linear
 		else:
 			target = gravity_area.gravity_vec
 		# rotate
-		rotation = lerp_angle(rotation, target.angle(), gravity_ang_lerp)
+		rotation = lerp_angle(rotation, target.angle() - PI/2, gravity_ang_lerp)
 
 # for rotating platforms, calculates surface velocity and matches
 func match_surface_velocity() -> bool:
@@ -188,27 +196,23 @@ func update_normal():
 			leave_platform()
 
 # jump - leaves platform and punts the dummy
-func jump(target, velocity):
+func jump(target, vel,reset_vel = false):
 	
 	print("jumping")
-	leave_platform()
+	
+
 	
 	# punt dummy
-	var impulse = (target - position).normalized() * velocity
-	if physics_dummy_spawned:
-		physics_dummy_instance.apply_central_impulse(impulse)
-	else:
-		print("the physics dummy is missing")
+	
+	var impulse = (target - global_position).normalized() * vel
+	
+	if(reset_vel):
+		despawn_physics_dummy()
+		spawn_physics_dummy(Vector2.ZERO)
+	physics_dummy_instance.apply_central_impulse(impulse)
 
 # does jump but zeroes velocity first
-func dodge(target, velocity):
-	
-	print("dodging")
-	
-	despawn_physics_dummy()
-	spawn_physics_dummy()
-	
-	jump(target, velocity)
+
 
 func enter_platform(collision : KinematicCollision2D):
 	print("entering platform: ", collision.normal)
@@ -223,7 +227,8 @@ func enter_platform(collision : KinematicCollision2D):
 	
 	boosts = boost_number
 
-func leave_platform():
+func leave_platform(microyeet = 0):
+	move_and_slide(platform_normal * microyeet, platform_normal)
 	print("leaving platform")
 	platform_normal = Vector2(0,0)
 	on_platform = false
@@ -232,7 +237,7 @@ func leave_platform():
 
 # PHYSICS DUMMY METHODS --
 
-func spawn_physics_dummy():
+func spawn_physics_dummy(init_velocity = velocity):
 	
 	if physics_dummy_instance != null:
 		print("physics dummy already exists")
@@ -245,6 +250,7 @@ func spawn_physics_dummy():
 	
 	physics_dummy_instance.connect("gravity_area_entered", self, "on_dummy_enter_grav")
 	physics_dummy_instance.connect("gravity_area_left", self, "on_dummy_leave_grav")
+	physics_dummy_instance.apply_central_impulse(init_velocity/physics_dummy_instance.mass)
 
 func despawn_physics_dummy():
 	
