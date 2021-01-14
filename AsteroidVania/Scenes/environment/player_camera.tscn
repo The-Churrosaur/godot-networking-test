@@ -6,3 +6,4 @@
 rotating = true
 current = true
 script = ExtResource( 1 )
+follow_on_magwalk = false

@@ -6,5 +6,4 @@
 "Platform",
 "WalkableSurface",
 ]]
-collision_layer = 3
 script = ExtResource( 2 )

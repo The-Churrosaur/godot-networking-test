@@ -16,11 +16,12 @@ export var maneuver_strength = 10
 export var boost_limited = true # boost as double jump
 export var boost_number = 3
 
+export var hit_area_path : NodePath
+
 # control flags - write from player/ai controller 
 
 var magwalk_dir : Vector2 = Vector2(0,0)
 var maneuver_dir : Vector2 = Vector2(0,0)
-
 
 var magwalk_enabled = true # if false overridden by planet gravity
 var should_jump = false # auto resets
@@ -47,7 +48,6 @@ var gravity_area : Area2D = null
 
 # global per-tick movement vector
 
-
 var displacement : Vector2
 var magwalk_displacement : Vector2
 var maneuver_impulse : Vector2
@@ -58,13 +58,30 @@ var mns_displacement : Vector2
 # jumping and movement
 
 var boosts = boost_number
+var snap_vector_length = 100
+
+# hitbox / combat
+
+onready var hit_area : Area2D = get_node(hit_area_path)
+
+# signals
+
+signal player_hit()
+signal entered_platform(platform, normal)
+signal left_platform()
 
 func _ready():
+	
 	# test, start by moving down, facing up
 	displacement = Vector2(0,40) 
 	platform_normal = Vector2(0,-1)
-	#spawn_physics_dummy()
 	
+	# initial spawn dummy in case floating
+	spawn_physics_dummy()
+	
+	# register hitbox impacts
+	assert(hit_area != null)
+	hit_area.connect("body_shape_entered", self, "on_hitbox_hit")
 
 func _physics_process(delta):
 	
@@ -85,13 +102,15 @@ func _physics_process(delta):
 		# if in grav, rotate feet to planet
 		rotate_towards_grav()
 		
-		
-		
+		# move
 		var collision =  move_and_collide(displacement * delta, false)
+		
+		# update rotation from input (?)
 		rotation += rotational_velocity
 		
 		# on collide
 		if (collision != null):
+			
 			print("collision")
 			# gravityplatforms override
 			if (collision.collider.is_in_group("GravityPlatform") || 
@@ -101,9 +120,12 @@ func _physics_process(delta):
 	# if on platform - 
 	# handle snapping, magbooting, jumping
 	else: 
-		#rotate to platform
+		
+		# rotate to platform
 		rotation = lerp_angle(rotation, platform_normal.angle() + PI/2, magwalk_ang_lerp)
-		var snap_vector = platform_normal * -100
+		
+		# update snap vector
+		var snap_vector = update_snap(snap_vector_length)
 		
 		# reset velocity
 		displacement = Vector2(0,0)
@@ -114,11 +136,14 @@ func _physics_process(delta):
 		# add displacement from magwalking
 		displacement += platform_normal.tangent() * magwalk_velocity * -magwalk_dir[0]
 		
+		
 		# for rotating platforms, calculates surface velocity and matches --
 		match_surface_velocity()
 		
 		# update normal --
 		update_normal()
+		
+		# do the move
 		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, 4*PI, false)
 	
 	# jump - leaves platform and punts the dummy
@@ -140,6 +165,9 @@ func _physics_process(delta):
 
 func add_magwalk_direction(direction):
 	magwalk_dir += direction
+func null_magwalk_direction():
+	magwalk_dir = Vector2.ZERO
+
 func add_maneuver_direction(direction):
 #	print(rotation)
 	maneuver_dir += direction
@@ -173,6 +201,7 @@ func match_surface_velocity() -> bool:
 	else:
 		return false
 	
+	# sv = r * radians/sec
 	var tangent_normal = radius.tangent().normalized()
 	var surface_vel = - radius.length() * angular_velocity * tangent_normal
 	displacement += surface_vel
@@ -192,12 +221,15 @@ func update_normal():
 			print("boing")
 			leave_platform()
 
+func update_snap(length) -> Vector2:
+	# currently uses direction to center of platform
+	# may be an issue for complex shaped platforms
+	return (platform.position - position).normalized() * length
+
 # jump - leaves platform and punts the dummy
 func jump(target, vel,reset_vel = false):
 	
 	print("jumping")
-	
-
 	
 	# punt dummy
 	
@@ -208,10 +240,8 @@ func jump(target, vel,reset_vel = false):
 		spawn_physics_dummy(Vector2.ZERO)
 	physics_dummy_instance.apply_central_impulse(impulse)
 
-# does jump but zeroes velocity first
-
-
 func enter_platform(collision : KinematicCollision2D):
+	
 	print("entering platform: ", collision.normal)
 	platform = collision.collider
 	platform_normal = collision.normal
@@ -219,16 +249,19 @@ func enter_platform(collision : KinematicCollision2D):
 	
 	just_landed = true
 	on_platform = true
+	emit_signal("entered_platform", platform, platform_normal)
 	
 	despawn_physics_dummy()
 	
 	boosts = boost_number
 
 func leave_platform(microyeet = 0):
+	
 	move_and_slide(platform_normal * microyeet, platform_normal)
 	print("leaving platform")
 	platform_normal = Vector2(0,0)
 	on_platform = false
+	emit_signal("left_platform")
 	
 	spawn_physics_dummy()
 
@@ -267,4 +300,8 @@ func on_dummy_leave_grav(area):
 	in_gravity = false
 	gravity_area = null
 
+# HITBOX METHODS --
 
+func on_hitbox_hit(body_id, body, body_shape, area_shape):
+	print("BONK")
+	emit_signal("player_hit")
