@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/character/BlueTest/light.png" type="Texture" id=2]
@@ -6,13 +6,10 @@
 [ext_resource path="res://Scenes/levels/TestScene.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/environment/test_kinematic_planet.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/environment/physics_platform.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/environment/player_camera.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/character/player_base.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/environment/test_turret.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/character/player.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/levels/level_utils/target_manager.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/background2.jpg" type="Texture" id=10]
-[ext_resource path="res://Scenes/character/player_controller.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scenes/character/hud/hud.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 212.791, 10 )
@@ -198,32 +195,6 @@ texture = ExtResource( 2 )
 color = Color( 0.913725, 0.74902, 0.403922, 1 )
 energy = 1.33
 
-[node name="KinematicCharacter" parent="." instance=ExtResource( 9 )]
-position = Vector2( 1242.79, 782.363 )
-magwalk_velocity = 500
-jump_impulse = 450
-boost_number = 4
-
-[node name="PlayerController2" parent="KinematicCharacter" instance=ExtResource( 11 )]
-character_path = NodePath("..")
-weapon_path = NodePath("../Weapon")
-camera_path = NodePath("../../PlayerCamera")
-
-[node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 12 )]
-position = Vector2( 0, -30.6064 )
-muzzle_path = NodePath("Muzzle")
-impulse = 1000.0
-cycle_interval = 0.15
-
-[node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
-
-[node name="PlayerCamera" parent="." instance=ExtResource( 7 )]
-position = Vector2( 1242.79, 782.363 )
-zoom = Vector2( 2, 2 )
-player_path = NodePath("../KinematicCharacter")
-follow_on_magwalk = true
-jump_to_camera = false
-
 [node name="Sprite" type="Sprite" parent="."]
 show_behind_parent = true
 position = Vector2( 415.159, 20.0453 )
@@ -231,13 +202,12 @@ texture = ExtResource( 10 )
 
 [node name="TestTurret" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1747.68, -341.521 )
-player_path = NodePath("../KinematicCharacter")
 
 [node name="TestTurret2" parent="." instance=ExtResource( 8 )]
 position = Vector2( -322.81, 218.953 )
-player_path = NodePath("../KinematicCharacter")
 
-[node name="Hud" parent="." instance=ExtResource( 13 )]
-follow_viewport_enable = false
-camera_path = NodePath("../PlayerCamera")
-player_path = NodePath("../KinematicCharacter")
+[node name="TargetManager" parent="." instance=ExtResource( 9 )]
+position = Vector2( -322.81, 218.953 )
+player_base_path = NodePath("../PlayerBase")
+
+[node name="PlayerBase" parent="." instance=ExtResource( 7 )]

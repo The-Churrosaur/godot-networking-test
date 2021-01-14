@@ -3,7 +3,6 @@
 [ext_resource path="res://Scenes/character/hud/hud.gd" type="Script" id=2]
 
 [node name="Hud" type="CanvasLayer"]
-follow_viewport_enable = true
 script = ExtResource( 2 )
 
 [node name="Hud" type="Control" parent="."]

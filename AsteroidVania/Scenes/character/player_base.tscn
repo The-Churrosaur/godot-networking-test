@@ -1,0 +1,69 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/character/hud/hud.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/environment/player_camera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/character/player_controller.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/character/BlueTest/Rig.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/character/PainSprite.gd" type="Script" id=7]
+[ext_resource path="res://icon.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=10]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 30.0
+
+[node name="PlayerBase" type="Node2D"]
+script = ExtResource( 10 )
+player_path = NodePath("KinematicCharacter")
+
+[node name="KinematicCharacter" parent="." instance=ExtResource( 6 )]
+magwalk_velocity = 500
+jump_impulse = 500
+boost_number = 4
+hit_area_path = NodePath("Hitbox")
+
+[node name="Rig" parent="KinematicCharacter" instance=ExtResource( 5 )]
+position = Vector2( 0, -47.6652 )
+scale = Vector2( 0.6, 0.6 )
+
+[node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
+muzzle_path = NodePath("Muzzle")
+impulse = 700.0
+cycle_interval = 0.15
+
+[node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
+
+[node name="Hitbox" type="Area2D" parent="KinematicCharacter"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicCharacter/Hitbox"]
+position = Vector2( 0, -19.7855 )
+shape = SubResource( 1 )
+
+[node name="JetLight" parent="KinematicCharacter" instance=ExtResource( 9 )]
+position = Vector2( 0, -7.821 )
+scale = Vector2( 0.25, 0.25 )
+
+[node name="Sprite2" type="Sprite" parent="KinematicCharacter"]
+position = Vector2( 0, -18.4026 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 8 )
+script = ExtResource( 7 )
+
+[node name="PlayerController" parent="." instance=ExtResource( 4 )]
+character_path = NodePath("../KinematicCharacter")
+weapon_path = NodePath("../KinematicCharacter/Weapon")
+camera_path = NodePath("../PlayerCamera")
+
+[node name="Hud" parent="." instance=ExtResource( 2 )]
+camera_path = NodePath("../PlayerCamera")
+player_path = NodePath("../KinematicCharacter")
+
+[node name="PlayerCamera" parent="." instance=ExtResource( 3 )]
+scale = Vector2( 0.25, 0.25 )
+player_path = NodePath("../KinematicCharacter")
+follow_on_magwalk = true
+jump_to_camera = false

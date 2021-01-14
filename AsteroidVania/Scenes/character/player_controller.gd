@@ -65,11 +65,11 @@ func _input(event):
 	# jump
 	
 	if event.is_action_pressed("ui_accept"):
-		get_parent().get_node("JetLight").visible = true
+		character.get_node("JetLight").visible = true
 	if event.is_action_released("ui_accept"):
 		character.jump_towards = get_global_mouse_position()
 		character.should_jump = true
-		get_parent().get_node("JetLight").visible = false
+		character.get_node("JetLight").visible = false
 	
 	# shoot
 	

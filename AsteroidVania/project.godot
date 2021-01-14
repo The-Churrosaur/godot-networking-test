@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/environment/physics_platform.gd"
 }, {
+"base": "Node2D",
+"class": "PlayerBase",
+"language": "GDScript",
+"path": "res://Scenes/character/player_base.gd"
+}, {
 "base": "Camera2D",
 "class": "PlayerCamera",
 "language": "GDScript",
@@ -40,6 +45,11 @@ _global_script_classes=[ {
 "path": "res://Scenes/character/player_controller.gd"
 }, {
 "base": "Node2D",
+"class": "TargetManager",
+"language": "GDScript",
+"path": "res://Scenes/levels/level_utils/target_manager.gd"
+}, {
+"base": "Node2D",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Scenes/character/weapons/weapon.gd"
@@ -49,8 +59,10 @@ _global_script_class_icons={
 "GravityArea": "",
 "KinematicCharacter": "",
 "PhysicsPlatform": "",
+"PlayerBase": "",
 "PlayerCamera": "",
 "PlayerController": "",
+"TargetManager": "",
 "Weapon": ""
 }
 

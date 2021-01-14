@@ -2,17 +2,21 @@ extends StaticBody2D
 
 # simple test turret don't duplicate architecture
 
-export var player_path : NodePath
+export var target_manager_path : NodePath = "../TargetManager"
 export var teleport_distance = 1000
 
 onready var rng = RandomNumberGenerator.new()
 onready var weapon = $Weapon
-onready var player = get_node(player_path)
+onready var target_manager = get_node(target_manager_path)
+
+var player
 
 func _ready():
-	print(player)
+	pass
 
 func _process(delta):
+	player = target_manager.get_target_node(target_manager.PLAYER)
+	
 	weapon.pull_trigger()
 	
 	# lead target
