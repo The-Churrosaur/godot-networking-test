@@ -212,6 +212,7 @@ camera_path = NodePath("../../PlayerCamera")
 position = Vector2( 0, -30.6064 )
 muzzle_path = NodePath("Muzzle")
 impulse = 1000.0
+cycle_interval = 0.15
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
 
@@ -219,6 +220,8 @@ impulse = 1000.0
 position = Vector2( 1242.79, 782.363 )
 zoom = Vector2( 2, 2 )
 player_path = NodePath("../KinematicCharacter")
+follow_on_magwalk = true
+jump_to_camera = false
 
 [node name="Sprite" type="Sprite" parent="."]
 show_behind_parent = true
