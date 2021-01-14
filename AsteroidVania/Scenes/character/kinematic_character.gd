@@ -70,6 +70,7 @@ onready var hit_area : Area2D = get_node(hit_area_path)
 signal player_hit()
 signal entered_platform(platform, normal)
 signal left_platform()
+signal jumping()
 
 func _ready():
 	
@@ -240,6 +241,8 @@ func jump(target, vel, reset_vel = false):
 		despawn_physics_dummy()
 		spawn_physics_dummy(Vector2.ZERO)
 	physics_dummy_instance.apply_central_impulse(impulse)
+	
+	emit_signal("jumping")
 
 func enter_platform(collision : KinematicCollision2D):
 	
@@ -250,11 +253,12 @@ func enter_platform(collision : KinematicCollision2D):
 	
 	just_landed = true
 	on_platform = true
-	emit_signal("entered_platform", platform, platform_normal)
 	
 	despawn_physics_dummy()
 	
 	boosts = boost_number
+	
+	emit_signal("entered_platform", platform, platform_normal)
 
 func leave_platform(microyeet = 0):
 	
