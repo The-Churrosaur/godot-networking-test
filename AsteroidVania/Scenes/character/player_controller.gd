@@ -72,6 +72,7 @@ func _input(event):
 		get_parent().get_node("JetLight").visible = false
 	
 	# shoot
+	
 	if event.is_action_pressed("ui_select"):
 		weapon.pull_trigger()
 	if event.is_action_released("ui_select"):

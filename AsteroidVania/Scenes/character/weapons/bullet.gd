@@ -11,6 +11,7 @@ onready var life_timer = $LifeTimer
 onready var activation_timer = $ActivationTimer
 
 var temp_collision_layer = collision_layer
+var temp_collision_mask = collision_mask
 
 func _ready():
 	
@@ -18,8 +19,9 @@ func _ready():
 	
 	contact_monitor = false # set on by activation timer
 	contacts_reported = 2
-	temp_collision_layer = collision_layer
+
 	collision_layer = 0
+	collision_mask = 0
 	
 	connect("body_entered", self, "on_body_entered")
 	
@@ -40,6 +42,7 @@ func on_life_timer():
 func on_activation_timer():
 	contact_monitor = true
 	collision_layer = temp_collision_layer
+	collision_mask = temp_collision_mask
 
 func on_body_entered(body):
 	

@@ -15,6 +15,7 @@ export var maneuver_strength = 10
 
 export var boost_limited = true # boost as double jump
 export var boost_number = 3
+export var boost_invul_time = 0.3
 
 export var hit_area_path : NodePath
 
@@ -136,7 +137,6 @@ func _physics_process(delta):
 		# add displacement from magwalking
 		displacement += platform_normal.tangent() * magwalk_velocity * -magwalk_dir[0]
 		
-		
 		# for rotating platforms, calculates surface velocity and matches --
 		match_surface_velocity()
 		
@@ -159,6 +159,7 @@ func _physics_process(delta):
 			should_jump = false
 			if boost_limited:
 				boosts -= 1
+			hitbox_invul(boost_invul_time)
 		
 
 # PHYSICS_UPDATE HELPER METHODS --
@@ -227,7 +228,7 @@ func update_snap(length) -> Vector2:
 	return (platform.position - position).normalized() * length
 
 # jump - leaves platform and punts the dummy
-func jump(target, vel,reset_vel = false):
+func jump(target, vel, reset_vel = false):
 	
 	print("jumping")
 	
@@ -300,8 +301,16 @@ func on_dummy_leave_grav(area):
 	in_gravity = false
 	gravity_area = null
 
-# HITBOX METHODS --
+# HITBOX METHODS -- should this be a separate node/helper class?
 
 func on_hitbox_hit(body_id, body, body_shape, area_shape):
-	print("BONK")
+	#print("BONK")
 	emit_signal("player_hit")
+
+# disable hitbox for time given
+func hitbox_invul(time : float = 0.0):
+	
+	hit_area.monitoring = false
+	yield(get_tree().create_timer(time), "timeout")
+	hit_area.monitoring = true
+	
