@@ -5,6 +5,7 @@ export var player_path : NodePath
 export var follow_lerp = 0.1
 export var follow_lerp_angle = 0.1
 export var follow_on_magwalk = true
+export var jump_to_camera = true
 
 onready var player : KinematicBody2D  = get_node(player_path)
 var following_rotation = true
@@ -26,5 +27,9 @@ func on_platform_entered(platform, normal):
 	if !follow_on_magwalk: following_rotation = false
 
 func on_platform_left():
+	
+	# test, this is bad
+	if jump_to_camera: player.rotation = rotation
+	
 	if !follow_on_magwalk: following_rotation = true
 
