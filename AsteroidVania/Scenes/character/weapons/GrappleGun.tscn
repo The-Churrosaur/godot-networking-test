@@ -8,9 +8,11 @@ script = ExtResource( 1 )
 impulse = 700.0
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 scale = Vector2( 1, 0.05 )
 texture = ExtResource( 2 )
 
 [node name="Sprite2" type="Sprite" parent="."]
+visible = false
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )

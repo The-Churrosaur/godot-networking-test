@@ -16,6 +16,7 @@ export var maneuver_strength = 10
 export var boost_limited = true # boost as double jump
 export var boost_number = 3
 export var boost_invul_time = 0.3
+export var maneuver_enabled = false # move around with WASD
 
 export var hit_area_path : NodePath
 
@@ -95,11 +96,16 @@ func _physics_process(delta):
 	# follow dummy, moveandcollide, rotate to gravity
 	if !on_platform : 
 		
-		# if dummy -
-		# set dv to physics dummy velocity
-		if physics_dummy_spawned:
+		# move with dummy -
+
+		assert (physics_dummy_spawned)
+		
+		# add maneuver thrust
+		if maneuver_enabled:
 			physics_dummy_instance.apply_central_impulse(maneuver_dir.rotated(rotation).normalized() * maneuver_strength);
-			displacement = physics_dummy_instance.linear_velocity
+		
+		# set dv to physics dummy velocity
+		displacement = physics_dummy_instance.linear_velocity
 			
 		# if in grav, rotate feet to planet
 		rotate_towards_grav()
