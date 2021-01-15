@@ -7,5 +7,3 @@ script = ExtResource( 1 )
 impulse = 200.0
 cycle_interval = 0.2
 is_automatic = true
-
-[node name="CycleTimer" type="Timer" parent="."]

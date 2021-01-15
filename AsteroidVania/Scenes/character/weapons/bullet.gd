@@ -6,6 +6,7 @@ export var life_time = 5.0
 export var activation_time = 0.2 # dead time before bullet activates
 
 signal bullet_removed(bullet, id)
+signal bullet_impacted(bullet, body)
 
 onready var life_timer = $LifeTimer
 onready var activation_timer = $ActivationTimer
@@ -40,6 +41,7 @@ func on_life_timer():
 	destroy()
 
 func on_activation_timer():
+	
 	contact_monitor = true
 	collision_layer = temp_collision_layer
 	collision_mask = temp_collision_mask
@@ -50,6 +52,7 @@ func on_body_entered(body):
 	if body.is_in_group("TestTurret"):
 		body.teleport()
 	
+	emit_signal("bullet_impacted", self, body)
 	destroy()
 
 func destroy():

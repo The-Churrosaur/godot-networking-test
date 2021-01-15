@@ -3,6 +3,7 @@ extends Node2D
 
 export var character_path : NodePath
 export var weapon_path : NodePath
+export var grapple_path : NodePath
 export var camera_path : NodePath
 export var relative_directional_magwalk = false
 
@@ -11,6 +12,7 @@ export var relative_directional_magwalk = false
 # watch for circular reference
 onready var character : KinematicCharacter = get_node(character_path)
 onready var weapon = get_node(weapon_path)
+onready var grapple = get_node(grapple_path)
 onready var camera : Camera2D = get_node(camera_path)
 
 # camera relative magwalk directions, set when player enters platform
@@ -77,11 +79,17 @@ func _input(event):
 		weapon.pull_trigger()
 	if event.is_action_released("ui_select"):
 		weapon.release_trigger()
+	
+	if event.is_action_pressed("ui_alt_select"):
+		grapple.pull_trigger()
+	if event.is_action_released("ui_alt_select"):
+		grapple.release_trigger()
 
 func _process(delta):
 	
 	# update weapon target
 	weapon.target = get_global_mouse_position()
+	grapple.target = get_global_mouse_position()
 
 func camera_relative_vector(vector : Vector2, player_rot) -> Vector2:
 	
