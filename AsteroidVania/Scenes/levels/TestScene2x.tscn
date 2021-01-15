@@ -143,6 +143,7 @@ shape = SubResource( 5 )
 
 [node name="DummyPlatform5" parent="." instance=ExtResource( 6 )]
 position = Vector2( -432.219, 584.565 )
+initial_velocity = Vector2( 10, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform5" groups=[
 "PhysicsPlatformCollider",

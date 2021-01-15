@@ -3,9 +3,11 @@ extends Node2D
 
 export var bullet_prefab = preload("res://Scenes/character/weapons/bullet.tscn")
 export var muzzle_path : NodePath
+export var shooter_path : NodePath
 export var impulse = 300.0 
 export var cycle_interval : float = 1 # seconds, rate of fire
 export var is_automatic = false
+export var inherit_velocity = false
 
 # bullet handler
 
@@ -23,6 +25,8 @@ var in_battery : bool = true
 var trigger_held : bool = false
 # current projectile
 var current_projectile = null
+# shooter
+onready var shooter : KinematicCharacter = get_node(shooter_path)
 
 func _ready():
 	
@@ -49,6 +53,13 @@ func fire_projectile():
 		var shot = (target - muzzle.global_position).normalized() * impulse
 		projectile.rotation = shot.angle()
 		projectile.apply_central_impulse(shot)
+		
+		# inherit velocity
+		if inherit_velocity:
+			if owner is KinematicCharacter:
+				projectile.linear_velocity += owner.velocity
+			else: print("owner is static, can't inherit velocity")
+
 	
 	# connect projectile
 	

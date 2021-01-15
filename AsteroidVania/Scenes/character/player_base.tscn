@@ -31,8 +31,10 @@ scale = Vector2( 0.6, 0.6 )
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 muzzle_path = NodePath("Muzzle")
+shooter_path = NodePath("..")
 impulse = 700.0
 cycle_interval = 0.15
+inherit_velocity = true
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
 
@@ -56,7 +58,7 @@ script = ExtResource( 7 )
 
 [node name="GrappleGun" parent="KinematicCharacter" instance=ExtResource( 11 )]
 muzzle_path = NodePath("Muzzle")
-player_path = NodePath("..")
+shooter_path = NodePath("..")
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/GrappleGun"]
 position = Vector2( 0, -45.5628 )
