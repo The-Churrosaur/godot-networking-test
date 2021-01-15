@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/character/kinematic_character.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 12.0
+radius = 15.0
 
 [node name="KinematicCharacter" type="KinematicBody2D"]
 script = ExtResource( 3 )

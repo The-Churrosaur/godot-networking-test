@@ -22,7 +22,6 @@ player_path = NodePath("KinematicCharacter")
 [node name="KinematicCharacter" parent="." instance=ExtResource( 6 )]
 magwalk_velocity = 500
 jump_impulse = 500
-boost_number = 4
 boost_invul_time = 0.7
 hit_area_path = NodePath("Hitbox")
 
