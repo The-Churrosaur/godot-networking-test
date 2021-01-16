@@ -16,7 +16,7 @@ export var maneuver_strength = 10
 export var boost_limited = true # boost as double jump
 export var boost_number = 3
 export var boost_invul_time = 0.3
-export var maneuver_enabled = false # move around with WASD
+export var maneuver_enabled = true # move around with WASD
 
 export var hit_area_path : NodePath
 

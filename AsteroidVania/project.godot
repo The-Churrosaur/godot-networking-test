@@ -87,7 +87,6 @@ BulletHandler="*res://Scenes/character/weapons/bullet_handler.tscn"
 window/size/width=960
 window/size/height=480
 window/size/resizable=false
-window/size/fullscreen=true
 window/size/test_width=1920
 window/size/test_height=1080
 window/stretch/mode="viewport"

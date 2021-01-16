@@ -9,6 +9,7 @@ export var grapple_max_impulse = 20
 export var reel_velocity = 1
 export var min_length = 20.0 # cuts off 
 export var player_path : NodePath
+export var max_distance = 1000
 
 onready var player = shooter # notation, shooter defined as kinematiccharacter in weapon
 var player_dummy : RigidBody2D
@@ -27,7 +28,8 @@ func _ready():
 
 func _physics_process(delta):
 	if is_grappling: 
-		apply_grapple(delta)
+		if !trigger_held:
+			apply_grapple(trigger_held, delta)
 		set_sprite()
 	else: 
 		sprite.visible = false
