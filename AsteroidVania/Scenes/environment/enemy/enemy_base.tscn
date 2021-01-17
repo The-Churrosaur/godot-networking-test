@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/character/PainSprite.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/environment/enemy/enemy_controller.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/character/weapons/GrappleGun.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/character/BlueTest/Rig.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=10]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 30.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 500.0
+
+[node name="EnemyBase" type="Node2D"]
+script = ExtResource( 2 )
+player_path = NodePath("../EnemyBase/KinematicCharacter")
+
+[node name="EnemyController" parent="." instance=ExtResource( 4 )]
+
+[node name="KinematicCharacter" parent="." instance=ExtResource( 9 )]
+magwalk_velocity = 400
+boost_limited = false
+boost_invul_time = 0.7
+hit_area_path = NodePath("../../EnemyBase/KinematicCharacter/Hitbox")
+
+[node name="Rig" parent="KinematicCharacter" instance=ExtResource( 8 )]
+position = Vector2( 0, -47.6652 )
+scale = Vector2( 0.6, 0.6 )
+
+[node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 10 )]
+muzzle_path = NodePath("../../../EnemyBase/KinematicCharacter/Weapon/Muzzle")
+shooter_path = NodePath("../../../EnemyBase/KinematicCharacter")
+impulse = 900.0
+cycle_interval = 0.3
+inherit_velocity = true
+
+[node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
+
+[node name="Hitbox" type="Area2D" parent="KinematicCharacter"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicCharacter/Hitbox"]
+position = Vector2( 0, -19.7855 )
+shape = SubResource( 1 )
+
+[node name="JetLight" parent="KinematicCharacter" instance=ExtResource( 6 )]
+position = Vector2( 0, -7.821 )
+scale = Vector2( 0.25, 0.25 )
+
+[node name="Sprite2" type="Sprite" parent="KinematicCharacter"]
+position = Vector2( 0, -18.4026 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="GrappleGun" parent="KinematicCharacter" instance=ExtResource( 7 )]
+muzzle_path = NodePath("../../../EnemyBase/KinematicCharacter/GrappleGun/Muzzle")
+shooter_path = NodePath("../../../EnemyBase/KinematicCharacter")
+
+[node name="Muzzle" type="Node2D" parent="KinematicCharacter/GrappleGun"]
+position = Vector2( 0, -45.5628 )
+
+[node name="DetectionArea" type="Area2D" parent="KinematicCharacter"]
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicCharacter/DetectionArea"]
+shape = SubResource( 2 )

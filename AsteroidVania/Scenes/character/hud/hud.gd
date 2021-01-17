@@ -21,7 +21,6 @@ func _ready():
 
 func add_pips(num):
 	for i in num:
-		print("adding pip")
 		var pip = pip_template.instance()
 		jump_pips.add_child(pip)
 

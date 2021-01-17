@@ -58,7 +58,9 @@ func fire_projectile():
 		if inherit_velocity:
 			if owner is KinematicCharacter:
 				projectile.linear_velocity += owner.velocity
-			else: print("owner is static, can't inherit velocity")
+			else: 
+				#print("owner is static, can't inherit velocity")
+				pass
 
 	
 	# connect projectile

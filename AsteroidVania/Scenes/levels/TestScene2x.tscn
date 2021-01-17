@@ -7,9 +7,9 @@
 [ext_resource path="res://Scenes/environment/test_kinematic_planet.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/environment/physics_platform.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/character/player_base.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/environment/test_turret.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/levels/level_utils/target_manager.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/background2.jpg" type="Texture" id=10]
+[ext_resource path="res://Scenes/environment/enemy/enemy_base.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 212.791, 10 )
@@ -201,14 +201,11 @@ show_behind_parent = true
 position = Vector2( 415.159, 20.0453 )
 texture = ExtResource( 10 )
 
-[node name="TestTurret" parent="." instance=ExtResource( 8 )]
-position = Vector2( 1747.68, -341.521 )
-
-[node name="TestTurret2" parent="." instance=ExtResource( 8 )]
-position = Vector2( -322.81, 218.953 )
-
 [node name="TargetManager" parent="." instance=ExtResource( 9 )]
 position = Vector2( -322.81, 218.953 )
 player_base_path = NodePath("../PlayerBase")
 
 [node name="PlayerBase" parent="." instance=ExtResource( 7 )]
+
+[node name="EnemyBase" parent="." instance=ExtResource( 11 )]
+position = Vector2( 835.271, -179.57 )

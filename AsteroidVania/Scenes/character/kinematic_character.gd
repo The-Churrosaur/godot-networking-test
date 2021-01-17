@@ -119,7 +119,6 @@ func _physics_process(delta):
 		# on collide
 		if (collision != null):
 			
-			print("collision")
 			# gravityplatforms override
 			if (collision.collider.is_in_group("GravityPlatform") || 
 				magwalk_enabled && collision.collider.is_in_group("Platform")):
@@ -232,7 +231,9 @@ func update_normal():
 func update_snap(length) -> Vector2:
 	# currently uses direction to center of platform
 	# may be an issue for complex shaped platforms
-	return (platform.position - position).normalized() * length
+	var snap = (platform.global_position - global_position).normalized() * length
+	#$Sprite.global_position = global_position + snap
+	return snap
 
 # jump - leaves platform and punts the dummy
 func jump(target, vel, reset_vel = false):
@@ -314,7 +315,7 @@ func on_dummy_leave_grav(area):
 # HITBOX METHODS -- should this be a separate node/helper class?
 
 func on_hitbox_hit(body_id, body, body_shape, area_shape):
-	#print("BONK")
+	print("BONK")
 	emit_signal("player_hit")
 
 # disable hitbox for time given
