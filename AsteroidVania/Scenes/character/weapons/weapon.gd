@@ -7,6 +7,8 @@ export var shooter_path : NodePath
 export var impulse = 300.0 
 export var cycle_interval : float = 1 # seconds, rate of fire
 export var is_automatic = false
+export var num_projectiles = 1
+export var spread = 0.1
 export var inherit_velocity = false
 
 # bullet handler
@@ -27,6 +29,8 @@ var trigger_held : bool = false
 var current_projectile = null
 # shooter
 onready var shooter : KinematicCharacter = get_node(shooter_path)
+# random gen
+onready var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _ready():
 	
@@ -50,7 +54,13 @@ func fire_projectile():
 	# fire at target
 	
 	if (projectile is RigidBody2D):
+		
 		var shot = (target - muzzle.global_position).normalized() * impulse
+		
+		# deviate projectile by spread
+		rng.randomize()
+		shot = shot.rotated(rng.randf_range(-spread, spread))
+		
 		projectile.rotation = shot.angle()
 		projectile.apply_central_impulse(shot)
 		
@@ -61,7 +71,6 @@ func fire_projectile():
 			else: 
 				#print("owner is static, can't inherit velocity")
 				pass
-
 	
 	# connect projectile
 	
@@ -77,8 +86,11 @@ func release_trigger():
 
 # firing sequence
 func try_fire():
+	
 	if (in_battery):
-		fire_projectile()
+		
+		for i in num_projectiles:
+			fire_projectile()
 		
 		in_battery = false
 		

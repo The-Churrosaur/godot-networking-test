@@ -34,9 +34,11 @@ muzzle_path = NodePath("Muzzle")
 shooter_path = NodePath("..")
 impulse = 900.0
 cycle_interval = 0.15
+spread = 0.05
 inherit_velocity = true
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
+position = Vector2( 0, -37.5189 )
 
 [node name="Hitbox" type="Area2D" parent="KinematicCharacter"]
 collision_layer = 2
@@ -47,10 +49,12 @@ position = Vector2( 0, -19.7855 )
 shape = SubResource( 1 )
 
 [node name="JetLight" parent="KinematicCharacter" instance=ExtResource( 9 )]
+visible = false
 position = Vector2( 0, -7.821 )
 scale = Vector2( 0.25, 0.25 )
 
 [node name="Sprite2" type="Sprite" parent="KinematicCharacter"]
+visible = false
 position = Vector2( 0, -18.4026 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 8 )
@@ -76,5 +80,3 @@ player_path = NodePath("../KinematicCharacter")
 [node name="PlayerCamera" parent="." instance=ExtResource( 3 )]
 scale = Vector2( 0.25, 0.25 )
 player_path = NodePath("../KinematicCharacter")
-follow_on_magwalk = true
-jump_to_camera = false

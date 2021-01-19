@@ -44,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/character/player_base.gd"
 }, {
-"base": "Camera2D",
+"base": "Node2D",
 "class": "PlayerCamera",
 "language": "GDScript",
 "path": "res://Scenes/environment/player_camera.gd"
@@ -53,6 +53,11 @@ _global_script_classes=[ {
 "class": "PlayerController",
 "language": "GDScript",
 "path": "res://Scenes/character/player_controller.gd"
+}, {
+"base": "Node",
+"class": "ScreenShaker",
+"language": "GDScript",
+"path": "res://Scenes/character/hud/screen_shaker.gd"
 }, {
 "base": "Node2D",
 "class": "TargetManager",
@@ -74,6 +79,7 @@ _global_script_class_icons={
 "PlayerBase": "",
 "PlayerCamera": "",
 "PlayerController": "",
+"ScreenShaker": "",
 "TargetManager": "",
 "Weapon": ""
 }

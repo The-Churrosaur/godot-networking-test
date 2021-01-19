@@ -4,3 +4,5 @@
 
 [node name="EnemyController" type="Node"]
 script = ExtResource( 1 )
+
+[node name="DecisionTimer" type="Timer" parent="."]

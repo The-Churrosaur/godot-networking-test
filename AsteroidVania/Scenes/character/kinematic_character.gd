@@ -68,7 +68,7 @@ onready var hit_area : Area2D = get_node(hit_area_path)
 
 # signals
 
-signal player_hit()
+signal player_hit(body)
 signal entered_platform(platform, normal)
 signal left_platform()
 signal jumping()
@@ -105,7 +105,8 @@ func _physics_process(delta):
 			physics_dummy_instance.apply_central_impulse(maneuver_dir.rotated(rotation).normalized() * maneuver_strength);
 		
 		# set dv to physics dummy velocity
-		displacement = physics_dummy_instance.linear_velocity
+		#displacement = physics_dummy_instance.linear_velocity
+		displacement = (physics_dummy_instance.global_position - global_position) * 60
 			
 		# if in grav, rotate feet to planet
 		rotate_towards_grav()
@@ -150,7 +151,7 @@ func _physics_process(delta):
 		update_normal()
 		
 		# do the move
-		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 10, 4*PI, false)
+		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 4, 4*PI, false)
 	
 	# jump - leaves platform and punts the dummy
 	if (should_jump):
@@ -232,7 +233,7 @@ func update_snap(length) -> Vector2:
 	# currently uses direction to center of platform
 	# may be an issue for complex shaped platforms
 	var snap = (platform.global_position - global_position).normalized() * length
-	#$Sprite.global_position = global_position + snap
+	$Sprite.global_position = global_position + snap
 	return snap
 
 # jump - leaves platform and punts the dummy
@@ -316,7 +317,7 @@ func on_dummy_leave_grav(area):
 
 func on_hitbox_hit(body_id, body, body_shape, area_shape):
 	print("BONK")
-	emit_signal("player_hit")
+	emit_signal("player_hit", body)
 
 # disable hitbox for time given
 func hitbox_invul(time : float = 0.0):
