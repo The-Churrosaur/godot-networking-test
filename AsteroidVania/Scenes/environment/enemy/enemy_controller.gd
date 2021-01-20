@@ -3,6 +3,7 @@ extends Node
 
 export var character_path : NodePath = "../KinematicCharacter"
 export var weapon_path : NodePath = "../KinematicCharacter/Weapon" # temp, work out a better way
+export var anim_path : NodePath = "../KinematicCharacter/Rig/AnimationPlayer"
 export var target_manager_path : NodePath = "../../TargetManager"
 export var detection_area_path : NodePath = "../KinematicCharacter/DetectionArea"
 
@@ -10,6 +11,7 @@ export var teleport_distance = 2000
 
 onready var character = get_node(character_path)
 onready var weapon = get_node(weapon_path)
+onready var animator : AnimationPlayer = get_node(anim_path)
 onready var target_manager = get_node(target_manager_path)
 onready var detection_area : Area2D = get_node(detection_area_path)
 
@@ -42,6 +44,10 @@ func _process(delta):
 		
 		# aim towards target
 		weapon.target = target.global_position
+		
+		# face towards target
+#		if !character.on_platform:
+#			character.rotation = PI + (target.global_position - character.global_position).angle()
 
 func on_area_detected(body):
 	
@@ -60,8 +66,7 @@ func on_area_lost(body):
 func acquire_target(body):
 	print("target acquired")
 	target = body
-	character.jump_towards = target.global_position
-	character.should_jump = true
+	jump_towards(target)
 
 func on_player_hit(body):
 	print("enemy hit")
@@ -77,6 +82,11 @@ func teleport():
 func char_landed(platform, normal):
 	pass
 
+func jump_towards(target):
+	
+	character.jump_towards = target.global_position
+	character.should_jump = true
+
 # TEST AI LOGIC --
 
 func on_decision_timer():
@@ -87,10 +97,11 @@ func on_decision_timer():
 			
 			# walk
 			character.magwalk_dir = magwalk_towards_target()
+		else:
+			character.rotation = PI + (target.global_position - character.global_position).angle()
 		
 		if (target.global_position - character.global_position).length_squared() > 500 * 500:
-			character.jump_towards = target.global_position
-			character.should_jump = true
+			jump_towards(target)
 
 func magwalk_towards_target() -> Vector2:
 	

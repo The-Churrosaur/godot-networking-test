@@ -2,6 +2,7 @@ class_name PlayerController
 extends Node2D
 
 export var character_path : NodePath
+export var anim_path : NodePath = "../KinematicCharacter/Rig/AnimationPlayer"
 export var weapon_path : NodePath
 export var grapple_path : NodePath
 export var camera_path : NodePath
@@ -11,6 +12,7 @@ export var relative_directional_magwalk = false
 
 # watch for circular reference
 onready var character : KinematicCharacter = get_node(character_path)
+onready var animator : AnimationPlayer = get_node(anim_path)
 onready var weapon = get_node(weapon_path)
 onready var grapple = get_node(grapple_path)
 onready var camera : Camera2D = get_node(camera_path)
@@ -73,6 +75,7 @@ func _input(event):
 		character.should_jump = true
 		character.get_node("JetLight").visible = false
 	
+	
 	# shoot
 	
 	if event.is_action_pressed("ui_select"):
@@ -90,6 +93,7 @@ func _process(delta):
 	# update weapon target
 	weapon.target = get_global_mouse_position()
 	grapple.target = get_global_mouse_position()
+	
 
 func camera_relative_vector(vector : Vector2, player_rot) -> Vector2:
 	
@@ -119,4 +123,5 @@ func on_player_enter_platform(platform, normal : Vector2):
 		magwalk_right = magwalk_left * -1
 	
 func on_player_left_platform():
+	
 	pass

@@ -20,14 +20,15 @@ script = ExtResource( 10 )
 player_path = NodePath("KinematicCharacter")
 
 [node name="KinematicCharacter" parent="." instance=ExtResource( 6 )]
+rig_scale = 0.6
 magwalk_velocity = 500
 jump_impulse = 500
 boost_invul_time = 0.7
 hit_area_path = NodePath("Hitbox")
 
 [node name="Rig" parent="KinematicCharacter" instance=ExtResource( 5 )]
-position = Vector2( 0, -47.6652 )
-scale = Vector2( 0.6, 0.6 )
+position = Vector2( 0.17944, -16.9724 )
+scale = Vector2( 1, 1 )
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 muzzle_path = NodePath("Muzzle")

@@ -25,13 +25,14 @@ player_path = NodePath("../EnemyBase/KinematicCharacter")
 [node name="KinematicCharacter" parent="." instance=ExtResource( 9 )]
 collision_layer = 8
 collision_mask = 8
+rig_scale = 0.6
 magwalk_velocity = 400
 boost_limited = false
 boost_invul_time = 0.7
 hit_area_path = NodePath("../../EnemyBase/KinematicCharacter/Hitbox")
 
 [node name="Rig" parent="KinematicCharacter" instance=ExtResource( 8 )]
-position = Vector2( 0, -47.6652 )
+position = Vector2( 0, -16.3484 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 10 )]

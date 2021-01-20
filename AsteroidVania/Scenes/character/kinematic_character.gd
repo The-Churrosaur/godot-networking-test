@@ -2,6 +2,7 @@ class_name KinematicCharacter
 extends KinematicBody2D
 
 # params
+export var rig_scale : float = 1
 
 export var rotational_velocity = 0
 export var rotational_speed = PI/64
@@ -19,6 +20,7 @@ export var boost_invul_time = 0.3
 export var maneuver_enabled = true # move around with WASD
 
 export var hit_area_path : NodePath
+export var animator_path : NodePath = "Rig/AnimationPlayer"
 
 # control flags - write from player/ai controller 
 
@@ -66,12 +68,17 @@ var snap_vector_length = 100
 
 onready var hit_area : Area2D = get_node(hit_area_path)
 
+# animation
+
+onready var animator = get_node(animator_path)
+
 # signals
 
 signal player_hit(body)
 signal entered_platform(platform, normal)
 signal left_platform()
 signal jumping()
+signal magwalking(direction)
 
 func _ready():
 	
@@ -154,6 +161,7 @@ func _physics_process(delta):
 		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 4, 4*PI, false)
 	
 	# jump - leaves platform and punts the dummy
+	# todo boost limiting on playercontroller/logic node
 	if (should_jump):
 		if boosts <= 0:
 			print("out of boosts")
@@ -167,7 +175,9 @@ func _physics_process(delta):
 			if boost_limited:
 				boosts -= 1
 			hitbox_invul(boost_invul_time)
-		
+	
+	# update movement animations
+	update_movement_animation()
 
 # PHYSICS_UPDATE HELPER METHODS --
 
@@ -233,7 +243,7 @@ func update_snap(length) -> Vector2:
 	# currently uses direction to center of platform
 	# may be an issue for complex shaped platforms
 	var snap = (platform.global_position - global_position).normalized() * length
-	$Sprite.global_position = global_position + snap
+	#$Sprite.global_position = global_position + snap
 	return snap
 
 # jump - leaves platform and punts the dummy
@@ -251,6 +261,26 @@ func jump(target, vel, reset_vel = false):
 	physics_dummy_instance.apply_central_impulse(impulse)
 	
 	emit_signal("jumping")
+
+func update_movement_animation():
+	
+	# this is trash, figure out some one-time signal for when magwalking
+	# maybe? or is keeping everything centralized here in a tree better
+	if on_platform && magwalk_dir != Vector2.ZERO:
+		animator.play("Run")
+		animator.playback_speed = 4
+	elif on_platform:
+		animator.play("StandIdle")
+		animator.playback_speed = 2
+	else :
+		animator.play("Float")
+		animator.playback_speed = 2
+	
+	# flip
+	if velocity.rotated(-rotation).x > 0 && velocity.length_squared() > 10 * 10:
+		$Rig.scale = Vector2(-1,1) * rig_scale
+	else:
+		$Rig.scale = Vector2(1,1) * rig_scale
 
 func enter_platform(collision : KinematicCollision2D):
 	
@@ -316,7 +346,7 @@ func on_dummy_leave_grav(area):
 # HITBOX METHODS -- should this be a separate node/helper class?
 
 func on_hitbox_hit(body_id, body, body_shape, area_shape):
-	print("BONK")
+	#print("BONK")
 	emit_signal("player_hit", body)
 
 # disable hitbox for time given
