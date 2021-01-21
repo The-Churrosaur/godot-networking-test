@@ -21,15 +21,31 @@ script = ExtResource( 10 )
 player_path = NodePath("KinematicCharacter")
 
 [node name="KinematicCharacter" parent="." instance=ExtResource( 6 )]
-rig_scale = 0.6
 magwalk_velocity = 500
 jump_impulse = 500
 boost_invul_time = 0.7
+maneuver_enabled = false
 hit_area_path = NodePath("Hitbox")
 
 [node name="Rig" parent="KinematicCharacter" instance=ExtResource( 5 )]
 position = Vector2( 0.17944, -16.9724 )
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.6, 0.6 )
+
+[node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
+position = Vector2( 86.17, 35.5453 )
+
+[node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
+rotation = -0.162222
+
+[node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
+rotation = -0.661451
+
+[node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
+position = Vector2( -6.37583, 4.59701 )
+rotation = 0.569183
+
+[node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
+rotation = -1.53448
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 muzzle_path = NodePath("Muzzle")
@@ -84,5 +100,7 @@ scale = Vector2( 0.25, 0.25 )
 player_path = NodePath("../KinematicCharacter")
 
 [node name="CharacterHealth" parent="." instance=ExtResource( 12 )]
+
+[editable path="KinematicCharacter/Rig"]
 
 [editable path="Hud"]

@@ -2,7 +2,6 @@ class_name KinematicCharacter
 extends KinematicBody2D
 
 # params
-export var rig_scale : float = 1
 
 export var rotational_velocity = 0
 export var rotational_speed = PI/64
@@ -20,7 +19,7 @@ export var boost_invul_time = 0.3
 export var maneuver_enabled = true # move around with WASD
 
 export var hit_area_path : NodePath
-export var animator_path : NodePath = "Rig/AnimationPlayer"
+export var animator_path : NodePath = "Rig/AnimationTree"
 
 # control flags - write from player/ai controller 
 
@@ -260,23 +259,30 @@ func jump(target, vel, reset_vel = false):
 
 func update_movement_animation():
 	
-	# this is trash, figure out some one-time signal for when magwalking
+	# this is eh, figure out some one-time signal for when magwalking
 	# maybe? or is keeping everything centralized here in a tree better
-	if on_platform && magwalk_dir != Vector2.ZERO:
-		animator.play("Run")
-		animator.playback_speed = 4
-	elif on_platform:
-		animator.play("StandIdle")
-		animator.playback_speed = 2
-	else :
-		animator.play("Float")
-		animator.playback_speed = 2
+	
+	if on_platform:
+		
+		#!floating
+		animator.floating_standing(0)
+		
+		#run
+		if magwalk_dir != Vector2.ZERO:
+			animator.run_stand(1)
+		#stand
+		else:
+			animator.run_stand(-1)
+		
+	else:
+		#floating
+		animator.floating_standing(1)
 	
 	# flip
 	if velocity.rotated(-rotation).x > 0 && velocity.length_squared() > 10 * 10:
-		$Rig.scale = Vector2(-1,1) * rig_scale
+		animator.face_direction(1)
 	else:
-		$Rig.scale = Vector2(1,1) * rig_scale
+		animator.face_direction(-1)
 
 # zip zap
 func update_teleport():

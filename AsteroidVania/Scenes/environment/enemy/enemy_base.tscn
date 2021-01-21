@@ -100,5 +100,6 @@ margin_right = 200.0
 [node name="CharacterHealth" parent="." instance=ExtResource( 11 )]
 use_health_bar = true
 health_bar_path = NodePath("../KinematicCharacter/HealthBar")
+starting_health = 4
 
 [editable path="KinematicCharacter/HealthBar"]
