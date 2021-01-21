@@ -3,9 +3,11 @@ extends CanvasLayer
 # TODO look into viewports?
 export var camera_path : NodePath
 export var player_path : NodePath
+export var health_bar_path : NodePath = "/Hud/HealthBar"
 
 onready var camera = get_node(camera_path)
 onready var player = get_node(player_path)
+onready var health_bar = get_node(health_bar_path)
 
 onready var pip_template = preload("res://Scenes/character/hud/pip.tscn")
 

@@ -31,6 +31,8 @@ var magwalk_enabled = true # if false overridden by planet gravity
 var should_jump = false # auto resets
 var jump_towards : Vector2 = Vector2(0,0)
 
+var teleport_to = null
+
 # platform information
 
 var on_platform = false
@@ -178,19 +180,13 @@ func _physics_process(delta):
 	
 	# update movement animations
 	update_movement_animation()
+	
+	# teleport if asked
+	update_teleport()
+
 
 # PHYSICS_UPDATE HELPER METHODS --
 
-func add_magwalk_direction(direction):
-	magwalk_dir += direction
-func null_magwalk_direction():
-	magwalk_dir = Vector2.ZERO
-
-func add_maneuver_direction(direction):
-#	print(rotation)
-	maneuver_dir += direction
-#	print(maneuver_dir)
-	
 
 # if in grav, rotate feet to planet
 func rotate_towards_grav():
@@ -282,6 +278,18 @@ func update_movement_animation():
 	else:
 		$Rig.scale = Vector2(1,1) * rig_scale
 
+# zip zap
+func update_teleport():
+	
+	if teleport_to is Vector2:
+		
+		if physics_dummy_instance != null:
+			physics_dummy_instance.global_position = teleport_to
+		else:
+			global_position = teleport_to
+		
+		teleport_to = null
+
 func enter_platform(collision : KinematicCollision2D):
 	
 	print("entering platform: ", collision.normal)
@@ -308,7 +316,9 @@ func leave_platform(microyeet = 0):
 	
 	spawn_physics_dummy()
 
+
 # PHYSICS DUMMY METHODS --
+
 
 func spawn_physics_dummy(init_velocity = velocity):
 	
@@ -342,6 +352,23 @@ func on_dummy_enter_grav(area):
 func on_dummy_leave_grav(area):
 	in_gravity = false
 	gravity_area = null
+
+
+# CONTROL METHODS --
+
+
+func add_magwalk_direction(direction):
+	magwalk_dir += direction
+func null_magwalk_direction():
+	magwalk_dir = Vector2.ZERO
+
+func add_maneuver_direction(direction):
+#	print(rotation)
+	maneuver_dir += direction
+#	print(maneuver_dir)
+
+func queue_teleport(pos : Vector2):
+	teleport_to = pos
 
 # HITBOX METHODS -- should this be a separate node/helper class?
 

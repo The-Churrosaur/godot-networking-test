@@ -4,5 +4,7 @@
 
 [node name="EnemyController" type="Node"]
 script = ExtResource( 1 )
+teleport_distance = 500
 
 [node name="DecisionTimer" type="Timer" parent="."]
+wait_time = 2.0

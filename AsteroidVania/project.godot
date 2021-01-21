@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://Scenes/character/weapons/bullet.gd"
 }, {
 "base": "Node",
+"class": "CharacterHealth",
+"language": "GDScript",
+"path": "res://character_health.gd"
+}, {
+"base": "Node",
 "class": "EnemyController",
 "language": "GDScript",
 "path": "res://Scenes/environment/enemy/enemy_controller.gd"
@@ -28,6 +33,11 @@ _global_script_classes=[ {
 "class": "GravityArea",
 "language": "GDScript",
 "path": "res://Scenes/environment/gravity_area.gd"
+}, {
+"base": "Control",
+"class": "HealthBar",
+"language": "GDScript",
+"path": "res://Scenes/character/hud/health_bar.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "KinematicCharacter",
@@ -71,9 +81,11 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Bullet": "",
+"CharacterHealth": "",
 "EnemyController": "",
 "GrappleGun": "",
 "GravityArea": "",
+"HealthBar": "",
 "KinematicCharacter": "",
 "PhysicsPlatform": "",
 "PlayerBase": "",

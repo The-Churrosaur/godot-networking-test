@@ -5,7 +5,12 @@ export var character_path : NodePath
 export var anim_path : NodePath = "../KinematicCharacter/Rig/AnimationPlayer"
 export var weapon_path : NodePath
 export var grapple_path : NodePath
+
 export var camera_path : NodePath
+export var hud_path : NodePath = "../Hud"
+export var health_path : NodePath = "../CharacterHealth"
+export var health_bar_path : NodePath = "../Hud/Hud/HealthBar"
+
 export var relative_directional_magwalk = false
 
 # the controlees
@@ -15,7 +20,11 @@ onready var character : KinematicCharacter = get_node(character_path)
 onready var animator : AnimationPlayer = get_node(anim_path)
 onready var weapon = get_node(weapon_path)
 onready var grapple = get_node(grapple_path)
+
 onready var camera : Camera2D = get_node(camera_path)
+onready var hud : CanvasLayer = get_node(hud_path)
+onready var health = get_node(health_path)
+onready var health_bar = get_node(health_bar_path)
 
 # camera relative magwalk directions, set when player enters platform
 # dynamically resetting is unintuitive
@@ -24,8 +33,10 @@ var magwalk_right = Vector2.RIGHT
 
 func _ready():
 	
+	# character connections
 	character.connect("entered_platform", self, "on_player_enter_platform")
 	character.connect("left_platform", self, "on_player_left_platform")
+	character.connect("player_hit", self, "on_player_hit")
 
 func _input(event):
 	
@@ -121,7 +132,13 @@ func on_player_enter_platform(platform, normal : Vector2):
 		
 		magwalk_left = camera_relative_vector(Vector2.LEFT, player_rot)
 		magwalk_right = magwalk_left * -1
-	
+
 func on_player_left_platform():
-	
 	pass
+
+func on_player_hit(body):
+	
+	# if shot
+	if body.is_in_group("Bullet"):
+		health.change_health(-1)
+		health_bar.remove_health(1)
