@@ -7,6 +7,7 @@ export var anim_path : NodePath = "../KinematicCharacter/Rig/AnimationPlayer"
 export var target_manager_path : NodePath = "../../TargetManager"
 export var detection_area_path : NodePath = "../KinematicCharacter/DetectionArea"
 export var health_path : NodePath = "../CharacterHealth"
+export var loot_spawner_path : NodePath = "../KinematicCharacter/LootSpawner"
 
 export var teleport_distance = 2000
 
@@ -16,6 +17,7 @@ onready var animator : AnimationPlayer = get_node(anim_path)
 onready var target_manager = get_node(target_manager_path)
 onready var detection_area : Area2D = get_node(detection_area_path)
 onready var health = get_node(health_path)
+onready var loot_spawner = get_node(loot_spawner_path)
 
 # logic
 # ai ponders action every firing
@@ -107,6 +109,8 @@ func jump_towards(target):
 func on_health_zero():
 	teleport()
 	health.change_health(5)
+	loot_spawner.spawn_loot()
+
 
 # TEST AI LOGIC --
 

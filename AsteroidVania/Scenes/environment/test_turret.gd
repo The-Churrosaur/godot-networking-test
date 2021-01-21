@@ -32,6 +32,9 @@ func _process(delta):
 	rotation = lerp_angle(rotation, (projected - position).angle(), 0.4)
 
 func teleport():
+	
+	$LootSpawner.spawn_loot()
+	
 	rng.randomize()
 	var x = rng.randf_range(-teleport_distance,teleport_distance)
 	var y = rng.randf_range(-teleport_distance,teleport_distance)

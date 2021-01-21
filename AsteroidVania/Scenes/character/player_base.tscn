@@ -43,8 +43,8 @@ inherit_velocity = true
 position = Vector2( 0, -37.5189 )
 
 [node name="Hitbox" type="Area2D" parent="KinematicCharacter"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 18
+collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicCharacter/Hitbox"]
 position = Vector2( 0, -19.7855 )

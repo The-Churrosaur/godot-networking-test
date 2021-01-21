@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/character/character_health.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/environment/loot_spawner.tscn" type="PackedScene" id=12]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 18.9434
@@ -93,6 +94,8 @@ anchor_right = 1.0
 
 [node name="HBoxContainer" parent="KinematicCharacter/HealthBar/MarginContainer" index="0"]
 margin_right = 200.0
+
+[node name="LootSpawner" parent="KinematicCharacter" instance=ExtResource( 12 )]
 
 [node name="CharacterHealth" parent="." instance=ExtResource( 11 )]
 use_health_bar = true

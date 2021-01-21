@@ -142,3 +142,9 @@ func on_player_hit(body):
 	if body.is_in_group("Bullet"):
 		health.change_health(-1)
 		health_bar.remove_health(1)
+	
+	# if medpack
+	if body.is_in_group("Pickup"):
+		body.collect_pickup(character)
+		health.change_health(1)
+		health_bar.add_health(1)
