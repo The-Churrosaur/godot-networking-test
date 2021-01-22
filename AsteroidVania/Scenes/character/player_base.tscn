@@ -32,20 +32,20 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.17, 35.5453 )
+position = Vector2( 86.0931, 33.8856 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.162222
+rotation = -0.121943
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.661451
+rotation = -0.631233
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.37583, 4.59701 )
-rotation = 0.569183
+position = Vector2( -6.61561, 5.50904 )
+rotation = 0.617504
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.53448
+rotation = -1.47924
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 muzzle_path = NodePath("Muzzle")

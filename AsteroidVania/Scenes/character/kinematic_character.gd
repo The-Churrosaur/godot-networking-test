@@ -259,30 +259,32 @@ func jump(target, vel, reset_vel = false):
 
 func update_movement_animation():
 	
-	# this is eh, figure out some one-time signal for when magwalking
+	# this is eh and buggy, figure out some one-time signal for when magwalking
 	# maybe? or is keeping everything centralized here in a tree better
 	
 	if on_platform:
 		
 		#!floating
-		animator.floating_standing(0)
+		animator.floating_standing(0, true)
 		
 		#run
 		if magwalk_dir != Vector2.ZERO:
-			animator.run_stand(1)
+			animator.run_stand(1, true)
 		#stand
 		else:
-			animator.run_stand(-1)
+			animator.run_stand(-1, true)
 		
 	else:
 		#floating
-		animator.floating_standing(1)
+		animator.floating_standing(1, true)
 	
 	# flip
 	if velocity.rotated(-rotation).x > 0 && velocity.length_squared() > 10 * 10:
-		animator.face_direction(1)
+		animator.face_direction(1, true, 0.01)
 	else:
-		animator.face_direction(-1)
+		animator.face_direction(-1, true, 0.01)
+
+
 
 # zip zap
 func update_teleport():

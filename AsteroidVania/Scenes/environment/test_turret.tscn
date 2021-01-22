@@ -21,7 +21,7 @@ shape = SubResource( 1 )
 [node name="Weapon" parent="." instance=ExtResource( 1 )]
 scale = Vector2( 5, 5 )
 muzzle_path = NodePath("Muzzle")
-impulse = 500.0
+impulse = 300.0
 cycle_interval = 0.3
 
 [node name="Muzzle" type="Node2D" parent="Weapon"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scenes/character/BlueTest/Bluestronaut_uv_128.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/character/BlueTest/Rig.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Scenes/character/BlueTest/anims/face_left_blend.tres" type="Animation" id=10]
 [ext_resource path="res://Scenes/character/BlueTest/anims/face_right_blend.tres" type="Animation" id=11]
 [ext_resource path="res://Scenes/character/BlueTest/blue_animation_tree.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/character/BlueTest/Tween.gd" type="Script" id=13]
 
 [sub_resource type="Animation" id=10]
 
@@ -147,7 +148,7 @@ bones = [ NodePath("hip"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePa
 position = Vector2( -86.3438, -45.5328 )
 
 [node name="hip" type="Bone2D" parent="Dolly/Skeleton2D"]
-position = Vector2( 86.1125, 34.3043 )
+position = Vector2( 86.2836, 37.9948 )
 rotation = -0.257991
 rest = Transform2D( 1, 0, 0, 1, 79.0557, 43.3478 )
 
@@ -215,7 +216,7 @@ rest = Transform2D( 1, 0, 0, 1, 0.715363, -7.95486 )
 
 [node name="hipL" type="Bone2D" parent="Dolly/Skeleton2D/hip"]
 position = Vector2( 1.27493, 4.47816 )
-rotation = -0.132105
+rotation = -0.22167
 rest = Transform2D( 1, 0, 0, 1, 4.1713, 1.55989 )
 __meta__ = {
 "_edit_bone_": true,
@@ -224,7 +225,7 @@ __meta__ = {
 
 [node name="kneeL" type="Bone2D" parent="Dolly/Skeleton2D/hip/hipL"]
 position = Vector2( 5.23389, 23.9714 )
-rotation = -0.638857
+rotation = -0.706052
 rest = Transform2D( 0.997978, 0.0635535, -0.0635535, 0.997978, 5.23389, 23.9714 )
 __meta__ = {
 "_edit_bone_": true
@@ -247,8 +248,8 @@ __meta__ = {
 }
 
 [node name="hipR" type="Bone2D" parent="Dolly/Skeleton2D/hip"]
-position = Vector2( -6.55512, 5.27894 )
-rotation = 0.605313
+position = Vector2( -6.06052, 3.39767 )
+rotation = 0.505641
 rest = Transform2D( 1, 0, 0, 1, -6.25122, 3.65421 )
 __meta__ = {
 "_edit_bone_": true,
@@ -257,7 +258,7 @@ __meta__ = {
 
 [node name="kneeR" type="Bone2D" parent="Dolly/Skeleton2D/hip/hipR"]
 position = Vector2( -5.32269, 21.896 )
-rotation = -1.49318
+rotation = -1.60712
 rest = Transform2D( 0.997978, 0.0635535, -0.0635535, 0.997978, -5.32269, 21.896 )
 __meta__ = {
 "_edit_bone_": true
@@ -304,3 +305,6 @@ parameters/floating_standing_blend/blend_amount = 1.0
 parameters/left_right_blend/blend_position = 1.0
 parameters/run_stand_blend/blend_position = 0.0
 script = ExtResource( 12 )
+
+[node name="Tween" type="Tween" parent="AnimationTree"]
+script = ExtResource( 13 )

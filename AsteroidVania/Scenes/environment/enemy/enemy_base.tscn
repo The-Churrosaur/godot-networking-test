@@ -30,7 +30,6 @@ teleport_distance = 2000
 [node name="KinematicCharacter" parent="." instance=ExtResource( 9 )]
 collision_layer = 8
 collision_mask = 8
-rig_scale = 0.6
 magwalk_velocity = 400
 boost_limited = false
 boost_invul_time = 0.0
