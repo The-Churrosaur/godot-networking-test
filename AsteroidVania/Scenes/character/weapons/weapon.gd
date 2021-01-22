@@ -28,7 +28,7 @@ var trigger_held : bool = false
 # current projectile
 var current_projectile = null
 # shooter
-onready var shooter : KinematicCharacter = get_node(shooter_path)
+onready var shooter = get_node(shooter_path)
 # random gen
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -55,6 +55,13 @@ func fire_projectile():
 	
 	if (projectile is RigidBody2D):
 		
+		# inherit velocity
+		if inherit_velocity:
+			if shooter is KinematicCharacter:
+				projectile.linear_velocity += shooter.velocity
+			elif shooter is RigidBody2D:
+				projectile.linear_velocity += shooter.linear_velocity
+		
 		var shot = (target - muzzle.global_position).normalized() * impulse
 		
 		# deviate projectile by spread
@@ -63,14 +70,6 @@ func fire_projectile():
 		
 		projectile.rotation = shot.angle()
 		projectile.apply_central_impulse(shot)
-		
-		# inherit velocity
-		if inherit_velocity:
-			if owner is KinematicCharacter:
-				projectile.linear_velocity += owner.velocity
-			else: 
-				#print("owner is static, can't inherit velocity")
-				pass
 	
 	# connect projectile
 	

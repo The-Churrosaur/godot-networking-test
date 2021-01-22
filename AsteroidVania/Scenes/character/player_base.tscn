@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/character/hud/hud.tscn" type="PackedScene" id=2]
@@ -6,10 +6,11 @@
 [ext_resource path="res://Scenes/character/player_controller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/character/BlueTest/Rig.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/character/weapons/grenade.tscn" type="PackedScene" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=10]
-[ext_resource path="res://Scenes/character/weapons/GrappleGun.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/character/weapons/grapple_gun.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/character/character_health.tscn" type="PackedScene" id=12]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -31,31 +32,32 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.2672, 37.6414 )
+position = Vector2( 86.2745, 37.7986 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.213094
+rotation = -0.216908
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.699618
+rotation = -0.702479
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.07299, 3.44511 )
-rotation = 0.508154
+position = Vector2( -6.27433, 4.21092 )
+rotation = 0.548728
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.60425
+rotation = -1.55786
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
+bullet_prefab = ExtResource( 7 )
 muzzle_path = NodePath("Muzzle")
 shooter_path = NodePath("..")
-impulse = 900.0
+impulse = 300.0
 cycle_interval = 0.15
-spread = 0.05
-inherit_velocity = true
+is_automatic = false
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
-position = Vector2( 0, -37.5189 )
+position = Vector2( 28.1799, -37.5189 )
+rotation = 0.00180601
 
 [node name="Hitbox" type="Area2D" parent="KinematicCharacter"]
 collision_layer = 18

@@ -162,7 +162,7 @@ func on_player_left_platform():
 func on_player_hit(body):
 	
 	# if shot
-	if !dodging && body.is_in_group("Bullet"):
+	if !dodging && body.is_in_group("Bullet") && !body.is_in_group("PlayerBullet"):
 		print("PLAYER SHOT")
 		temp_hitflash()
 		health.change_health(-1)
