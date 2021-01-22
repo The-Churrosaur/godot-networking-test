@@ -32,20 +32,20 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.2124, 36.4586 )
+position = Vector2( 86.1955, 36.0938 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.184389
+rotation = -0.175534
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.678082
+rotation = -0.671439
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.51631, 5.13133 )
-rotation = 0.597492
+position = Vector2( -6.29659, 4.29558 )
+rotation = 0.553213
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.50212
+rotation = -1.55274
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 bullet_prefab = ExtResource( 7 )
@@ -54,6 +54,7 @@ shooter_path = NodePath("..")
 impulse = 300.0
 cycle_interval = 0.15
 is_automatic = false
+inherit_velocity = true
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
 position = Vector2( 28.1799, -37.5189 )

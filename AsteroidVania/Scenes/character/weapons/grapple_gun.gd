@@ -58,7 +58,7 @@ func apply_grapple(reel = true, delta = 1.0):
 	var dif = vec.length() - rope_length
 	
 	# cutoff
-	if dif < min_length:
+	if dif < min_length || dif > max_distance:
 		end_grapple()
 		return
 	
@@ -92,6 +92,13 @@ func on_bullet_impact(bullet, body):
 	grapple_point = bullet.global_position
 	grapple_offset = (grapple_point - body.position).rotated(-body.rotation)
 	is_grappling = true
+
+# cut grapple with trigger
+func pull_trigger():
+	if is_grappling:
+		end_grapple()
+	else:
+		.pull_trigger()
 
 # also cut grapple if hitting platform
 func on_player_landed(platform, normal):
