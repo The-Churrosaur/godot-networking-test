@@ -51,7 +51,7 @@ position = Vector2( 0, -47.2359 )
 
 [node name="Hitbox" type="Area2D" parent="KinematicCharacter"]
 monitorable = false
-collision_layer = 2
+collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicCharacter/Hitbox"]

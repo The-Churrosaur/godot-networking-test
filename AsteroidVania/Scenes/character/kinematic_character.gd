@@ -386,8 +386,8 @@ func on_hitbox_hit(body_id, body, body_shape, area_shape):
 
 # disable hitbox for time given
 func hitbox_invul(time : float = 0.0):
-	
-	hit_area.monitoring = false
-	yield(get_tree().create_timer(time), "timeout")
-	hit_area.monitoring = true
+	var col = get_node("/root/CollisionLayers")
+#	set_collision_mask_bit(col.LAYER_BULLET, false)
+#	yield(get_tree().create_timer(time), "timeout")
+#	set_collision_mask_bit(col.LAYER_BULLET, true)
 	

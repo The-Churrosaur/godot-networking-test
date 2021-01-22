@@ -123,6 +123,7 @@ config/icon="res://icon.png"
 [autoload]
 
 BulletHandler="*res://Scenes/character/weapons/bullet_handler.tscn"
+CollisionLayers="*res://Scenes/levels/level_utils/collision_layers.gd"
 
 [display]
 

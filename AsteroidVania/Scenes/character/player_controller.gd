@@ -105,6 +105,10 @@ func _process(delta):
 	weapon.target = get_global_mouse_position()
 	grapple.target = get_global_mouse_position()
 	
+	if !character.on_platform:
+		character.rotation = (camera.global_position - get_global_mouse_position()).angle()
+
+	
 
 func camera_relative_vector(vector : Vector2, player_rot) -> Vector2:
 	
