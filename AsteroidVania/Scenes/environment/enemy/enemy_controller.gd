@@ -87,8 +87,15 @@ func on_player_hit(body):
 	
 	if body.is_in_group("Bullet"):
 		print("ENEMY HIT")
-		#teleport()
 		health.change_health(-1)
+		temp_hitflash()
+
+# replace with animations maybe
+func temp_hitflash():
+	var sprite = get_node("../KinematicCharacter/Sprite2")
+	sprite.visible = true
+	yield(get_tree().create_timer(0.2), "timeout")
+	sprite.visible = false
 
 func teleport():
 	print("teleporting")
@@ -108,7 +115,7 @@ func jump_towards(target):
 
 func on_health_zero():
 	teleport()
-	health.change_health(5)
+	health.reset_health()
 	loot_spawner.spawn_loot()
 
 

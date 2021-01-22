@@ -9,10 +9,13 @@ export var grapple_path : NodePath
 export var camera_path : NodePath
 export var hud_path : NodePath = "../Hud"
 export var health_path : NodePath = "../CharacterHealth"
-export var health_bar_path : NodePath = "../Hud/Hud/HealthBar"
 
 export var relative_directional_magwalk = false
 export var mouse_camera_rotation = false
+
+export var invul_time = 0.7
+
+export var dodging = false # while true, ignores bullets
 
 # the controlees
 
@@ -25,7 +28,6 @@ onready var grapple = get_node(grapple_path)
 onready var camera : Camera2D = get_node(camera_path)
 onready var hud : CanvasLayer = get_node(hud_path)
 onready var health = get_node(health_path)
-onready var health_bar = get_node(health_bar_path)
 
 # camera relative magwalk directions, set when player enters platform
 # dynamically resetting is unintuitive
@@ -39,6 +41,7 @@ func _ready():
 	character.connect("left_platform", self, "on_player_left_platform")
 	character.connect("player_hit", self, "on_player_hit")
 
+# inputs do be handled here
 func _input(event):
 	
 	# magwalk and boost
@@ -81,11 +84,9 @@ func _input(event):
 	# jump
 	
 	if event.is_action_pressed("ui_accept"):
-		character.get_node("JetLight").visible = true
+		pass
 	if event.is_action_released("ui_accept"):
-		character.jump_towards = get_global_mouse_position()
-		character.should_jump = true
-		character.get_node("JetLight").visible = false
+		jump()
 	
 	
 	# shoot
@@ -99,6 +100,23 @@ func _input(event):
 		grapple.pull_trigger()
 	if event.is_action_released("ui_alt_select"):
 		grapple.release_trigger()
+
+# input handler helpers
+func jump():
+	
+	character.jump_towards = get_global_mouse_position()
+	character.should_jump = true
+	
+	invul(invul_time)
+	
+	character.get_node("JetLight").visible = true
+	yield(get_tree().create_timer(0.1), "timeout")
+	character.get_node("JetLight").visible = false
+
+func invul(time : float):
+	dodging = true
+	yield(get_tree().create_timer(time), "timeout")
+	dodging = false
 
 func _process(delta):
 	
@@ -144,12 +162,20 @@ func on_player_left_platform():
 func on_player_hit(body):
 	
 	# if shot
-	if body.is_in_group("Bullet"):
+	if !dodging && body.is_in_group("Bullet"):
+		print("PLAYER SHOT")
+		temp_hitflash()
 		health.change_health(-1)
-		health_bar.remove_health(1)
+		body.impact(character)
 	
 	# if medpack
 	if body.is_in_group("Pickup"):
 		body.collect_pickup(character)
 		health.change_health(1)
-		health_bar.add_health(1)
+
+# replace with animations maybe
+func temp_hitflash():
+	var sprite = get_node("../KinematicCharacter/Sprite2")
+	sprite.visible = true
+	yield(get_tree().create_timer(0.2), "timeout")
+	sprite.visible = false

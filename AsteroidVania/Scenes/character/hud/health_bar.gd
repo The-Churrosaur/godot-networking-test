@@ -1,16 +1,22 @@
 class_name HealthBar
 extends Control
 
+# tracks target health node
+export var char_health_path : NodePath
 export var health_box_path : NodePath = "/MarginContainer/HBoxContainer"
 export var health_pip_resource : PackedScene  = preload("res://Scenes/character/hud/health_pip.tscn")
-export var starting_health = 5
 
+onready var char_health = get_node(char_health_path)
 onready var health_box = get_node(health_box_path)
 
 var health_displayed = 0 # no touch
 
 func _ready():
-	set_health(starting_health)
+	
+	# connect to character health, set starting health
+	if char_health != null:
+		char_health.connect("health_changed", self, "set_health")
+		set_health(char_health.starting_health)
 
 func set_health(health : int):
 	var dif = health - health_displayed

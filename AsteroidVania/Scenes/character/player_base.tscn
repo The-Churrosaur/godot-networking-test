@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/character/hud/hud.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Scenes/character/player_controller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/character/BlueTest/Rig.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/character/PainSprite.gd" type="Script" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=10]
@@ -32,20 +31,20 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.0717, 33.4248 )
+position = Vector2( 86.2672, 37.6414 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.11076
+rotation = -0.213094
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.622843
+rotation = -0.699618
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.8891, 6.54931 )
-rotation = 0.672618
+position = Vector2( -6.07299, 3.44511 )
+rotation = 0.508154
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.41624
+rotation = -1.60425
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 muzzle_path = NodePath("Muzzle")
@@ -76,7 +75,6 @@ visible = false
 position = Vector2( 0, -18.4026 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 8 )
-script = ExtResource( 7 )
 
 [node name="GrappleGun" parent="KinematicCharacter" instance=ExtResource( 11 )]
 muzzle_path = NodePath("Muzzle")
@@ -95,11 +93,15 @@ camera_path = NodePath("../PlayerCamera")
 camera_path = NodePath("../PlayerCamera")
 player_path = NodePath("../KinematicCharacter")
 
+[node name="HealthBar" parent="Hud/Hud" index="1"]
+char_health_path = NodePath("../../../CharacterHealth")
+
 [node name="PlayerCamera" parent="." instance=ExtResource( 3 )]
 scale = Vector2( 0.25, 0.25 )
 player_path = NodePath("../KinematicCharacter")
 
 [node name="CharacterHealth" parent="." instance=ExtResource( 12 )]
+starting_health = 10
 
 [editable path="KinematicCharacter/Rig"]
 

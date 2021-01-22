@@ -52,6 +52,9 @@ func on_body_entered(body):
 	if body.is_in_group("TestTurret"):
 		body.teleport()
 	
+	impact(body)
+
+func impact(body):
 	emit_signal("bullet_impacted", self, body)
 	destroy()
 

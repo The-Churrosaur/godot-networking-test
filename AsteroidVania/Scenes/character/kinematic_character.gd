@@ -175,7 +175,6 @@ func _physics_process(delta):
 			should_jump = false
 			if boost_limited:
 				boosts -= 1
-			hitbox_invul(boost_invul_time)
 	
 	# update movement animations
 	update_movement_animation()
@@ -244,7 +243,7 @@ func update_snap(length) -> Vector2:
 # jump - leaves platform and punts the dummy
 func jump(target, vel, reset_vel = false):
 	
-	print("jumping")
+	#print("jumping")
 	
 	# punt dummy
 	
@@ -383,11 +382,3 @@ func queue_teleport(pos : Vector2):
 func on_hitbox_hit(body_id, body, body_shape, area_shape):
 	#print("BONK")
 	emit_signal("player_hit", body)
-
-# disable hitbox for time given
-func hitbox_invul(time : float = 0.0):
-	var col = get_node("/root/CollisionLayers")
-#	set_collision_mask_bit(col.LAYER_BULLET, false)
-#	yield(get_tree().create_timer(time), "timeout")
-#	set_collision_mask_bit(col.LAYER_BULLET, true)
-	
