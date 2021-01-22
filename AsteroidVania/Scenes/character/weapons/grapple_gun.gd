@@ -32,6 +32,8 @@ func _physics_process(delta):
 			apply_grapple(trigger_held, delta)
 		set_sprite()
 		player.maneuver_enabled = true
+		# rotate towards grapple
+		player.rotation = lerp(player.rotation, (player.global_position - grapple_point).angle(), 0.5)
 	else: 
 		sprite.visible = false
 		$Sprite2.visible = false
@@ -109,7 +111,7 @@ func set_sprite():
 	var half = (grapple_point - muzzle.global_position) / 2
 	sprite.global_position = global_position + half
 	sprite.global_rotation = half.angle()
-	sprite.scale.x = half.length() / 64
+	sprite.scale.x = half.length() / 4
 	
 	$Sprite2.visible = true
 	$Sprite2.global_position = grapple_point

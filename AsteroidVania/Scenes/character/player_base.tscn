@@ -32,29 +32,30 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.1955, 36.0938 )
+position = Vector2( 86.185, 35.8673 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.175534
+rotation = -0.170037
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.671439
+rotation = -0.667314
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.29659, 4.29558 )
-rotation = 0.553213
+position = Vector2( -6.62311, 5.53757 )
+rotation = 0.619015
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.55274
+rotation = -1.47751
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 bullet_prefab = ExtResource( 7 )
 muzzle_path = NodePath("Muzzle")
 shooter_path = NodePath("..")
-impulse = 300.0
+muzzle_vel = 500.0
 cycle_interval = 0.15
 is_automatic = false
 inherit_velocity = true
+velocity_minimum = true
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
 position = Vector2( 28.1799, -37.5189 )
@@ -82,6 +83,7 @@ texture = ExtResource( 8 )
 [node name="GrappleGun" parent="KinematicCharacter" instance=ExtResource( 11 )]
 muzzle_path = NodePath("Muzzle")
 shooter_path = NodePath("..")
+muzzle_vel = 1500.0
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/GrappleGun"]
 position = Vector2( 0, -45.5628 )

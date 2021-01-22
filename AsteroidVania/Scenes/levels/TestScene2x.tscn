@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/character/BlueTest/light.png" type="Texture" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Scenes/environment/test_kinematic_planet.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/environment/physics_platform.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/character/player_base.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/environment/test_turret.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/levels/level_utils/target_manager.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/background2.jpg" type="Texture" id=10]
 [ext_resource path="res://Scenes/environment/enemy/enemy_base.tscn" type="PackedScene" id=11]
@@ -208,8 +207,8 @@ player_base_path = NodePath("../PlayerBase")
 
 [node name="PlayerBase" parent="." instance=ExtResource( 7 )]
 
-[node name="TestTurret" parent="." instance=ExtResource( 8 )]
-position = Vector2( -1191.69, 478.852 )
-
 [node name="EnemyBase" parent="." instance=ExtResource( 11 )]
 position = Vector2( -272.075, 0 )
+
+[node name="EnemyBase2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1398.46, 293.841 )

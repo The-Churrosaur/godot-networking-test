@@ -4,12 +4,13 @@ extends Node2D
 export var bullet_prefab = preload("res://Scenes/character/weapons/bullet.tscn")
 export var muzzle_path : NodePath
 export var shooter_path : NodePath
-export var impulse = 300.0 
+export var muzzle_vel = 300.0 
 export var cycle_interval : float = 1 # seconds, rate of fire
 export var is_automatic = false
 export var num_projectiles = 1
 export var spread = 0.1
 export var inherit_velocity = false
+export var velocity_minimum = false # if inherit velocity, absolute velocity will not drop below impulse 
 
 # bullet handler
 
@@ -55,19 +56,38 @@ func fire_projectile():
 	
 	if (projectile is RigidBody2D):
 		
+		# get shot direction
+		var shot_dir = (target - muzzle.global_position).normalized()
+		
 		# inherit velocity
 		if inherit_velocity:
+			
+			var shooter_vel
 			if shooter is KinematicCharacter:
-				projectile.linear_velocity += shooter.velocity
+				shooter_vel = shooter.velocity
 			elif shooter is RigidBody2D:
-				projectile.linear_velocity += shooter.linear_velocity
+				shooter_vel = shooter.linear_velocity
+			
+			# enforce velocity minimum
+			
+			# if not checking for velocity minimum,
+			# or, are checking and shot is in same direction as character, 
+			# append velocity
+			if velocity_minimum:
+				# rebrain this
+				if shot_dir.project(shooter_vel).normalized().rotated(-shooter_vel.angle()).x > 0:
+					projectile.linear_velocity += shooter_vel
+			else:
+				projectile.linear_velocity += shooter_vel
 		
-		var shot = (target - muzzle.global_position).normalized() * impulse
+		# calculate impulse
+		var shot = shot_dir * muzzle_vel / projectile.mass
 		
 		# deviate projectile by spread
 		rng.randomize()
 		shot = shot.rotated(rng.randf_range(-spread, spread))
 		
+		# shoot shot
 		projectile.rotation = shot.angle()
 		projectile.apply_central_impulse(shot)
 	

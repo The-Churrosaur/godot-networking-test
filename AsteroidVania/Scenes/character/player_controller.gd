@@ -25,7 +25,7 @@ onready var animator : AnimationPlayer = get_node(anim_path)
 onready var weapon = get_node(weapon_path)
 onready var grapple = get_node(grapple_path)
 
-onready var camera : Camera2D = get_node(camera_path)
+onready var camera = get_node(camera_path)
 onready var hud : CanvasLayer = get_node(hud_path)
 onready var health = get_node(health_path)
 

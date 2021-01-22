@@ -21,7 +21,7 @@ func _process(delta):
 	
 	# lead target
 	
-	var shot_time = (player.position - position).length() / weapon.impulse
+	var shot_time = (player.position - position).length() / weapon.muzzle_vel
 	var displacement = (player.velocity * shot_time)
 	
 	var projected = player.position + displacement
