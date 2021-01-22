@@ -12,6 +12,7 @@ export var health_path : NodePath = "../CharacterHealth"
 export var health_bar_path : NodePath = "../Hud/Hud/HealthBar"
 
 export var relative_directional_magwalk = false
+export var mouse_camera_rotation = false
 
 # the controlees
 
@@ -105,9 +106,9 @@ func _process(delta):
 	weapon.target = get_global_mouse_position()
 	grapple.target = get_global_mouse_position()
 	
-	if !character.on_platform:
-		character.rotation = (camera.global_position - get_global_mouse_position()).angle()
-
+	if !character.on_platform && mouse_camera_rotation:
+		var view = hud.get_viewport()
+		character.rotation = (view.get_mouse_position() - view.size / 2).angle()
 	
 
 func camera_relative_vector(vector : Vector2, player_rot) -> Vector2:
