@@ -31,9 +31,11 @@ func _physics_process(delta):
 		if !trigger_held:
 			apply_grapple(trigger_held, delta)
 		set_sprite()
+		player.maneuver_enabled = true
 	else: 
 		sprite.visible = false
 		$Sprite2.visible = false
+		player.maneuver_enabled = false
 
 func apply_grapple(reel = true, delta = 1.0):
 	

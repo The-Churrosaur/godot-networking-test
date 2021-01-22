@@ -7,7 +7,6 @@
 [node name="Grenade" instance=ExtResource( 2 )]
 position = Vector2( 0.125343, 0 )
 collision_layer = 0
-collision_mask = 3
 script = ExtResource( 1 )
 life_time = 1.0
 

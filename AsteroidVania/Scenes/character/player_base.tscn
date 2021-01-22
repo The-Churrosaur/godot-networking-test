@@ -32,20 +32,20 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.2745, 37.7986 )
+position = Vector2( 86.2124, 36.4586 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.216908
+rotation = -0.184389
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.702479
+rotation = -0.678082
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.27433, 4.21092 )
-rotation = 0.548728
+position = Vector2( -6.51631, 5.13133 )
+rotation = 0.597492
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.55786
+rotation = -1.50212
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 bullet_prefab = ExtResource( 7 )
