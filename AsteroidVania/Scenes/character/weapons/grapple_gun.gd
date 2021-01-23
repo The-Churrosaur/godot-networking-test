@@ -32,8 +32,11 @@ func _physics_process(delta):
 			apply_grapple(trigger_held, delta)
 		set_sprite()
 		player.maneuver_enabled = true
+		
+		# test
 		# rotate towards grapple
-		player.rotation = lerp_angle(player.rotation, (player.global_position - grapple_point).angle(), 0.1)
+		var target_angle = (player.global_position - grapple_point).angle() + PI/2
+		player.rotation = lerp_angle(player.rotation, target_angle, 0.1)
 	else: 
 		sprite.visible = false
 		$Sprite2.visible = false

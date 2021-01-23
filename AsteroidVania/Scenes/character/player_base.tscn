@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/character/hud/hud.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Scenes/character/player_controller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/character/BlueTest/Rig.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/character/weapons/grenade.tscn" type="PackedScene" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=10]
@@ -32,28 +31,26 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.185, 35.8673 )
+position = Vector2( 86.1973, 36.1327 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.170037
+rotation = -0.176477
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.667314
+rotation = -0.672147
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.62311, 5.53757 )
-rotation = 0.619015
+position = Vector2( -6.29097, 4.27422 )
+rotation = 0.552081
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.47751
+rotation = -1.55403
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
-bullet_prefab = ExtResource( 7 )
 muzzle_path = NodePath("Muzzle")
 shooter_path = NodePath("..")
 muzzle_vel = 500.0
 cycle_interval = 0.15
-is_automatic = false
 inherit_velocity = true
 velocity_minimum = true
 
