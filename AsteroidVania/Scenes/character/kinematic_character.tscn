@@ -17,5 +17,8 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -15 )
-scale = Vector2( 0.2, 0.2 )
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
+
+[node name="NormalRaycast" type="RayCast2D" parent="."]
+enabled = true

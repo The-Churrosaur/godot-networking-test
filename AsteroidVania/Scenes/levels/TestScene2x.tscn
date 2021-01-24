@@ -209,13 +209,11 @@ player_base_path = NodePath("../PlayerBase")
 
 [node name="PlayerBase" parent="." instance=ExtResource( 7 )]
 
-[node name="EnemyGrenadier" parent="." instance=ExtResource( 11 )]
-position = Vector2( -797.179, 353.697 )
-player_path = NodePath("")
-
 [node name="EnemyShotgun" parent="." instance=ExtResource( 8 )]
-position = Vector2( 345.535, -5.44141 )
-player_path = NodePath("")
+position = Vector2( 680.167, 41.7431 )
+
+[node name="EnemyGrenadier" parent="." instance=ExtResource( 11 )]
+position = Vector2( 260.28, 444.441 )
 
 [node name="EnemyBase" parent="." instance=ExtResource( 12 )]
-position = Vector2( -314.301, -383.054 )
+position = Vector2( -601.591, -27.0103 )

@@ -34,6 +34,7 @@ var teleport_to = null
 
 # platform information
 
+onready var normal_raycast = $NormalRaycast
 var on_platform = false
 var platform = null
 var platform_normal : Vector2
@@ -140,6 +141,9 @@ func _physics_process(delta):
 		# rotate to platform
 		rotation = lerp_angle(rotation, platform_normal.angle() + PI/2, magwalk_ang_lerp)
 		
+		# update normal --
+		update_normal()
+		
 		# update snap vector
 		var snap_vector = update_snap(snap_vector_length)
 		
@@ -150,16 +154,17 @@ func _physics_process(delta):
 		displacement += -platform_normal * magwalk_gravity
 		
 		# add displacement from magwalking
-		displacement += platform_normal.tangent() * magwalk_velocity * -magwalk_dir[0]
+		displacement += platform_normal.tangent() * magwalk_velocity * -magwalk_dir.x
 		
 		# for rotating platforms, calculates surface velocity and matches --
 		match_surface_velocity()
 		
-		# update normal --
-		update_normal()
+		# visualize displacement
+#		$Sprite.global_position = global_position + displacement
 		
 		# do the move
-		move_and_slide_with_snap(displacement, snap_vector, platform_normal, false, 4, 4*PI, false)
+		move_and_slide_with_snap(displacement, snap_vector, platform_normal, 
+								false, 4, 4*PI, false)
 	
 	# jump - leaves platform and punts the dummy
 	# todo boost limiting on playercontroller/logic node
@@ -221,23 +226,25 @@ func match_surface_velocity() -> bool:
 	return true
 
 func update_normal():
-	# if just landed, use normal from previous loop collision
-	if just_landed:
-		print("just landed")
-		just_landed = false
-	# else check moveandslide
-	else:
-		platform_normal = get_floor_normal()
-		# if broke away from platform last tick
-		if platform_normal == Vector2(0,0):
-			print("boing")
-			leave_platform()
+#	# if just landed, use normal from previous loop collision
+#	if just_landed:
+#		print("just landed")
+#		just_landed = false
+#	# else check moveandslide
+#	else:
+#		platform_normal = get_floor_normal()
+#		# if broke away from platform last tick
+	
+	# raycast to center of platform, get impact normal
+	normal_raycast.cast_to = (platform.global_position - global_position).rotated(-rotation)
+	platform_normal = normal_raycast.get_collision_normal()
+#	$Sprite.global_position = normal_raycast.get_collision_point() + platform_normal
 
 func update_snap(length) -> Vector2:
 	# currently uses direction to center of platform
 	# may be an issue for complex shaped platforms
 	var snap = (platform.global_position - global_position).normalized() * length
-	#$Sprite.global_position = global_position + snap
+#	$Sprite.global_position = global_position + snap
 	return snap
 
 # jump - leaves platform and punts the dummy
@@ -317,7 +324,7 @@ func leave_platform(microyeet = 0):
 	
 	move_and_slide(platform_normal * microyeet, platform_normal)
 	print("leaving platform")
-	platform_normal = Vector2(0,0)
+#	platform_normal = Vector2(0,0)
 	on_platform = false
 	emit_signal("left_platform")
 	
