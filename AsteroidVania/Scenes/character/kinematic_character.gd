@@ -106,7 +106,7 @@ func _physics_process(delta):
 		
 		# move with dummy -
 
-		assert (physics_dummy_spawned)
+		assert (physics_dummy_instance != null)
 		
 		# add maneuver thrust
 		if maneuver_enabled:
@@ -334,8 +334,9 @@ func spawn_physics_dummy(init_velocity = velocity):
 		return
 	
 	physics_dummy_instance = physics_dummy_preload.instance()
-	physics_dummy_instance.position = position
-	get_parent().add_child(physics_dummy_instance)
+	# TODO get level root from global manager
+	get_tree().root.add_child(physics_dummy_instance)
+	physics_dummy_instance.global_position = global_position
 	physics_dummy_spawned = true
 	
 	physics_dummy_instance.connect("gravity_area_entered", self, "on_dummy_enter_grav")
@@ -345,7 +346,7 @@ func spawn_physics_dummy(init_velocity = velocity):
 func despawn_physics_dummy():
 	
 	if physics_dummy_instance != null:
-		get_parent().remove_child(physics_dummy_instance)
+		physics_dummy_instance.get_parent().remove_child(physics_dummy_instance)
 		physics_dummy_instance.queue_free()
 		physics_dummy_instance = null
 		physics_dummy_spawned = false

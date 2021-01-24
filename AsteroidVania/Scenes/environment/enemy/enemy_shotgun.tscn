@@ -42,20 +42,20 @@ position = Vector2( 0, -16.3484 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.1799, 35.7581 )
+position = Vector2( 86.1768, 35.6909 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.167387
+rotation = -0.165757
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.665327
+rotation = -0.664104
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.64282, 5.61256 )
-rotation = 0.622988
+position = Vector2( -6.35478, 4.51695 )
+rotation = 0.564942
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.47297
+rotation = -1.53933
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Rig/Dolly" index="4"]
 position = Vector2( 0.184381, -52.4625 )

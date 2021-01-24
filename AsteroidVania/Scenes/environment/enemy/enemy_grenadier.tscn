@@ -43,20 +43,26 @@ position = Vector2( 0, -16.3484 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.0601, 33.1755 )
+position = Vector2( 86.207, 36.342 )
+
+[node name="Sprite" type="Sprite" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/chest" index="3"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 11.0039, 2.4667 )
+scale = Vector2( 0.2, 0.3 )
+texture = ExtResource( 1 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.10471
+rotation = -0.181559
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.618304
+rotation = -0.675959
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.71819, 5.89924 )
-rotation = 0.638177
+position = Vector2( -6.53737, 5.21143 )
+rotation = 0.601736
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.45561
+rotation = -1.49727
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Rig/Dolly" index="4"]
 position = Vector2( 0.184381, -52.4625 )

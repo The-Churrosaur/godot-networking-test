@@ -12,7 +12,7 @@ func on_decision_timer():
 		else:
 			character.rotation = PI + (target.global_position - character.global_position).angle()
 		
-		if (target.global_position - character.global_position).length_squared() > 500 * 500:
+		if (target.global_position - character.global_position).length_squared() > 300 * 300:
 			jump_towards(target.global_position)
 
 func on_area_detected(body):
@@ -22,5 +22,10 @@ func on_area_detected(body):
 	if body == target_manager.get_target_node(target_manager.PLAYER):
 		acquire_target(body)
 		# jump away from target
-#		var away = target.global_position - character.global_position * -1
-#		jump_towards(away)
+		var away = target.global_position - character.global_position * -1
+		jump_towards(away)
+
+func on_area_lost(body):
+	
+	if body == target:
+		acquire_target(body)
