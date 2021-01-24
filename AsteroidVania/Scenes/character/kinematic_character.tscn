@@ -7,6 +7,7 @@
 radius = 15.0
 
 [node name="KinematicCharacter" type="KinematicBody2D"]
+collision_layer = 0
 script = ExtResource( 3 )
 boost_limited = false
 

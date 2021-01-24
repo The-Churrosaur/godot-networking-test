@@ -29,6 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/environment/enemy/enemy_controller.gd"
 }, {
+"base": "EnemyShotgunController",
+"class": "EnemyGrenadierController",
+"language": "GDScript",
+"path": "res://Scenes/environment/enemy/enemy_grenadier_controller.gd"
+}, {
+"base": "EnemyController",
+"class": "EnemyShotgunController",
+"language": "GDScript",
+"path": "res://Scenes/environment/enemy/enemy_shotgun_controller.gd"
+}, {
 "base": "Weapon",
 "class": "GrappleGun",
 "language": "GDScript",
@@ -109,6 +119,8 @@ _global_script_class_icons={
 "Bullet": "",
 "CharacterHealth": "",
 "EnemyController": "",
+"EnemyGrenadierController": "",
+"EnemyShotgunController": "",
 "GrappleGun": "",
 "GravityArea": "",
 "Grenade": "",

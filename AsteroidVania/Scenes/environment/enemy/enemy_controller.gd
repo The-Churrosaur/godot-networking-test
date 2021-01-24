@@ -8,6 +8,7 @@ export var target_manager_path : NodePath = "../../TargetManager"
 export var detection_area_path : NodePath = "../KinematicCharacter/DetectionArea"
 export var health_path : NodePath = "../CharacterHealth"
 export var loot_spawner_path : NodePath = "../KinematicCharacter/LootSpawner"
+export var raycast_path : NodePath = "../KinematicCharacter/Raycast2D"
 
 export var teleport_distance = 2000
 
@@ -18,6 +19,7 @@ onready var target_manager = get_node(target_manager_path)
 onready var detection_area : Area2D = get_node(detection_area_path)
 onready var health = get_node(health_path)
 onready var loot_spawner = get_node(loot_spawner_path)
+onready var raycast : RayCast2D = get_node(raycast_path)
 
 # logic
 # ai ponders action every firing
@@ -45,8 +47,11 @@ func _ready():
 	health.connect("health_zero", self, "on_health_zero")
 
 func _process(delta):
+	process_logic()
+
+func process_logic():
 	
-	# basic logic
+	# basic  per-frame logic
 	if target != null:
 		
 		# aim towards target
@@ -56,13 +61,30 @@ func _process(delta):
 #		if !character.on_platform:
 #			character.rotation = PI + (target.global_position - character.global_position).angle()
 		
-		# lead target
+		lead_target()
 		
-		var shot_time = (target.position - character.position).length() / weapon.muzzle_vel
-		var displacement = (target.velocity * shot_time)
+		if !target_obstructed(target):
+			weapon.pull_trigger()
+		else:
+			weapon.release_trigger()
+
+func on_decision_timer():
+	
+	if target != null:
 		
-		var projected = target.position + displacement
-		weapon.target = projected
+		if character.on_platform:
+			
+			# walk
+			character.magwalk_dir = magwalk_towards_target()
+		else:
+			character.rotation = PI + (target.global_position - character.global_position).angle()
+		
+		if (target.global_position - character.global_position).length_squared() > 500 * 500:
+			jump_towards(target.global_position)
+
+# HITBOX AND LOGIC HELPERS --
+
+# HITBOX 
 
 func on_area_detected(body):
 	
@@ -70,25 +92,47 @@ func on_area_detected(body):
 	# idk might be good to log all targetters
 	if body == target_manager.get_target_node(target_manager.PLAYER):
 		acquire_target(body)
-		weapon.pull_trigger()
+		jump_towards(target.global_position)
 
 func on_area_lost(body):
 	
 	if body == target:
 		acquire_target(body)
-		weapon.release_trigger()
+		jump_towards(target.global_position)
+
+func on_player_hit(body):
+	
+	if body.is_in_group("PlayerBullet"):
+		print("ENEMY HIT")
+		health.change_health(-1)
+		temp_hitflash()
+
+# RAYCAST
+
+func target_obstructed(target) -> bool : 
+
+	raycast.cast_to = (target.global_position - character.global_position).rotated(-character.rotation)
+	
+	var collider = raycast.get_collider()
+	if collider != null && collider != target:
+		return true
+	else :
+		return false
+
+# LOGIC
+
+func lead_target():
+	# lead target
+	
+	var shot_time = (target.position - character.position).length() / weapon.muzzle_vel
+	var displacement = (target.velocity * shot_time)
+	
+	var projected = target.position + displacement
+	weapon.target = projected
 
 func acquire_target(body):
 	print("target acquired")
 	target = body
-	jump_towards(target)
-
-func on_player_hit(body):
-	
-	if body.is_in_group("Bullet"):
-		print("ENEMY HIT")
-		health.change_health(-1)
-		temp_hitflash()
 
 # replace with animations maybe
 func temp_hitflash():
@@ -108,32 +152,15 @@ func teleport():
 func char_landed(platform, normal):
 	pass
 
-func jump_towards(target):
+func jump_towards(pos):
 	
-	character.jump_towards = target.global_position
+	character.jump_towards = pos
 	character.should_jump = true
 
 func on_health_zero():
 	teleport()
 	health.reset_health()
 	loot_spawner.spawn_loot()
-
-
-# TEST AI LOGIC --
-
-func on_decision_timer():
-	
-	if target != null:
-		
-		if character.on_platform:
-			
-			# walk
-			character.magwalk_dir = magwalk_towards_target()
-		else:
-			character.rotation = PI + (target.global_position - character.global_position).angle()
-		
-		if (target.global_position - character.global_position).length_squared() > 500 * 500:
-			jump_towards(target)
 
 func magwalk_towards_target() -> Vector2:
 	

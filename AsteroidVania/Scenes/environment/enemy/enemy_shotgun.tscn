@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/environment/enemy/enemy_shotgun_controller.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/environment/enemy/enemy_controller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/character/hud/health_bar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=6]
@@ -18,52 +19,56 @@ height = 30.0
 [sub_resource type="CircleShape2D" id=2]
 radius = 500.0
 
-[node name="EnemyBase" type="Node2D"]
+[node name="EnemyShotgun" type="Node2D"]
 script = ExtResource( 2 )
 player_path = NodePath("../EnemyBase/KinematicCharacter")
 
-[node name="EnemyController" parent="." instance=ExtResource( 4 )]
+[node name="EnemyShotgunController" parent="." instance=ExtResource( 4 )]
+script = ExtResource( 3 )
 anim_path = NodePath("../KinematicCharacter/Rig/AnimationTree")
 raycast_path = NodePath("../KinematicCharacter/RayCast2D")
-teleport_distance = 1000
+teleport_distance = 2000
 
 [node name="KinematicCharacter" parent="." instance=ExtResource( 9 )]
 collision_layer = 8
 collision_mask = 8
 magwalk_velocity = 400
 boost_invul_time = 0.0
-hit_area_path = NodePath("../../EnemyBase/KinematicCharacter/Hitbox")
+hit_area_path = NodePath("Hitbox")
+animator_path = NodePath("../../EnemyShotgun/KinematicCharacter/Rig/AnimationTree")
 
 [node name="Rig" parent="KinematicCharacter" instance=ExtResource( 8 )]
 position = Vector2( 0, -16.3484 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.2421, 37.1001 )
+position = Vector2( 86.1799, 35.7581 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.199956
+rotation = -0.167387
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.689761
+rotation = -0.665327
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.40047, 4.69072 )
-rotation = 0.574148
+position = Vector2( -6.64282, 5.61256 )
+rotation = 0.622988
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.5288
+rotation = -1.47297
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/Rig/Dolly" index="4"]
-position = Vector2( -72.3635, -41.2215 )
+position = Vector2( 0.184381, -52.4625 )
 rotation = 3.14069
 scale = Vector2( 1.66667, -1.66667 )
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 10 )]
 muzzle_path = NodePath("../Rig/Dolly/Muzzle")
-shooter_path = NodePath("../../../EnemyBase/KinematicCharacter")
-muzzle_vel = 700.0
+shooter_path = NodePath("..")
+muzzle_vel = 500.0
 cycle_interval = 0.9
+num_projectiles = 3
+spread = 0.2
 
 [node name="Hitbox" type="Area2D" parent="KinematicCharacter"]
 monitorable = false
@@ -79,6 +84,7 @@ position = Vector2( 0, -7.821 )
 scale = Vector2( 0.25, 0.25 )
 
 [node name="Sprite2" type="Sprite" parent="KinematicCharacter"]
+visible = false
 position = Vector2( 0, -18.4026 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 1 )
@@ -95,7 +101,8 @@ margin_left = -100.0
 margin_top = -88.6732
 margin_right = 100.0
 margin_bottom = 11.3268
-char_health_path = NodePath("../../CharacterHealth")
+char_health_path = NodePath("../../../EnemyShotgun/CharacterHealth")
+health_box_path = NodePath("../../../EnemyShotgun/KinematicCharacter/HealthBar/MarginContainer/HBoxContainer")
 
 [node name="MarginContainer" parent="KinematicCharacter/HealthBar" index="0"]
 anchor_right = 1.0

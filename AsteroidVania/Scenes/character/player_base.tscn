@@ -22,6 +22,8 @@ player_path = NodePath("KinematicCharacter")
 [node name="KinematicCharacter" parent="." instance=ExtResource( 6 )]
 magwalk_velocity = 500
 jump_impulse = 500
+boost_limited = true
+boost_number = 4
 boost_invul_time = 0.7
 maneuver_enabled = false
 hit_area_path = NodePath("Hitbox")
@@ -31,20 +33,20 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.1973, 36.1327 )
+position = Vector2( 86.1366, 34.8241 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.176477
+rotation = -0.144719
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.672147
+rotation = -0.64832
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.29097, 4.27422 )
-rotation = 0.552081
+position = Vector2( -6.48003, 4.99333 )
+rotation = 0.590181
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.55403
+rotation = -1.51048
 
 [node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
 muzzle_path = NodePath("Muzzle")
@@ -87,6 +89,7 @@ position = Vector2( 0, -45.5628 )
 
 [node name="PlayerController" parent="." instance=ExtResource( 4 )]
 character_path = NodePath("../KinematicCharacter")
+anim_path = NodePath("../KinematicCharacter/Rig/AnimationTree")
 weapon_path = NodePath("../KinematicCharacter/Weapon")
 grapple_path = NodePath("../KinematicCharacter/GrappleGun")
 camera_path = NodePath("../PlayerCamera")
@@ -94,6 +97,7 @@ camera_path = NodePath("../PlayerCamera")
 [node name="Hud" parent="." instance=ExtResource( 2 )]
 camera_path = NodePath("../PlayerCamera")
 player_path = NodePath("../KinematicCharacter")
+health_bar_path = NodePath("Hud/HealthBar")
 
 [node name="HealthBar" parent="Hud/Hud" index="1"]
 char_health_path = NodePath("../../../CharacterHealth")

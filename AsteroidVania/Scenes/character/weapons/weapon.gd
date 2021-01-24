@@ -33,6 +33,9 @@ onready var shooter = get_node(shooter_path)
 # random gen
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
+# assigns bullet to group
+var bullet_group = null
+
 func _ready():
 	
 	# set muzzle node from path
@@ -90,6 +93,10 @@ func fire_projectile():
 		# shoot shot
 		projectile.rotation = shot.angle()
 		projectile.apply_central_impulse(shot)
+		
+		# set bullet group
+		if bullet_group != null:
+			projectile.add_to_group(bullet_group)
 	
 	# connect projectile
 	

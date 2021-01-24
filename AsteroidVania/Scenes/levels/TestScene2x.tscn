@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/character/BlueTest/light.png" type="Texture" id=2]
@@ -7,9 +7,10 @@
 [ext_resource path="res://Scenes/environment/test_kinematic_planet.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/environment/physics_platform.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/character/player_base.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/environment/enemy/enemy_shotgun.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/levels/level_utils/target_manager.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/background2.jpg" type="Texture" id=10]
-[ext_resource path="res://Scenes/environment/enemy/enemy_base.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/environment/enemy/enemy_grenadier.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 212.791, 10 )
@@ -207,8 +208,8 @@ player_base_path = NodePath("../PlayerBase")
 
 [node name="PlayerBase" parent="." instance=ExtResource( 7 )]
 
-[node name="EnemyBase" parent="." instance=ExtResource( 11 )]
-position = Vector2( -272.075, 0 )
+[node name="EnemyGrenadier" parent="." instance=ExtResource( 11 )]
+position = Vector2( -797.179, 353.697 )
 
-[node name="EnemyBase2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 1398.46, 293.841 )
+[node name="EnemyShotgun" parent="." instance=ExtResource( 8 )]
+position = Vector2( 345.535, -5.44141 )

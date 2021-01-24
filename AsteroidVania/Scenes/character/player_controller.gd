@@ -40,6 +40,9 @@ func _ready():
 	character.connect("entered_platform", self, "on_player_enter_platform")
 	character.connect("left_platform", self, "on_player_left_platform")
 	character.connect("player_hit", self, "on_player_hit")
+	
+	# weapon setup
+	weapon.bullet_group = "PlayerBullet"
 
 # inputs do be handled here
 func _input(event):
