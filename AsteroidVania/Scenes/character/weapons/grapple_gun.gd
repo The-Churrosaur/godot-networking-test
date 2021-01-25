@@ -12,6 +12,7 @@ export var min_length = 20.0 # cuts off
 export var max_distance = 1000
 
 onready var player = get_node(player_path)
+onready var line = $Line2D
 var player_dummy : RigidBody2D
 var grapple_body : PhysicsBody2D
 var grapple_point : Vector2 = Vector2.ZERO
@@ -31,17 +32,13 @@ func _physics_process(delta):
 	if is_grappling: 
 		if !trigger_held:
 			apply_grapple(trigger_held, delta)
-		set_sprite()
-		player.maneuver_enabled = true
+#		set_sprite()
+		set_line()
 		
 		# test
 		# rotate towards grapple
 		var target_angle = (player.global_position - grapple_point).angle() + PI/2
 		player.rotation = lerp_angle(player.rotation, target_angle, 0.1)
-	else: 
-		sprite.visible = false
-		$Sprite2.visible = false
-		player.maneuver_enabled = false
 
 func apply_grapple(reel = true, delta = 1.0):
 	
@@ -82,6 +79,16 @@ func apply_grapple(reel = true, delta = 1.0):
 
 func end_grapple():
 	is_grappling = false
+	line.visible = false
+	sprite.visible = false
+	$Sprite2.visible = false
+	player.maneuver_enabled = false
+
+func start_grapple():
+	rope_length = grapple_length
+	is_grappling = true
+	line.visible = true
+	player.maneuver_enabled = true
 
 func on_bullet_impact(bullet, body):
 	.on_bullet_impact(bullet, body)
@@ -94,10 +101,10 @@ func on_bullet_impact(bullet, body):
 	player_dummy = player.physics_dummy_instance
 	grapple_body = body
 	
-	rope_length = grapple_length
 	grapple_point = bullet.global_position
 	grapple_offset = (grapple_point - body.position).rotated(-body.rotation)
-	is_grappling = true
+	
+	start_grapple()
 
 # cut grapple with trigger
 func pull_trigger():
@@ -119,3 +126,7 @@ func set_sprite():
 	
 	$Sprite2.visible = true
 	$Sprite2.global_position = grapple_point
+
+func set_line():
+	line.set_point_position(0, line.to_local(grapple_point))
+	line.set_point_position(1, line.to_local(muzzle.global_position))

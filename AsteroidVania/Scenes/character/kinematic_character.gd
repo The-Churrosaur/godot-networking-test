@@ -115,7 +115,7 @@ func _physics_process(delta):
 		
 		# set dv to physics dummy velocity
 		#displacement = physics_dummy_instance.linear_velocity
-		displacement = (physics_dummy_instance.global_position - global_position) * 60
+		displacement = .to_local(physics_dummy_instance.global_position) * 60
 			
 		# if in grav, rotate feet to planet
 		rotate_towards_grav()
@@ -236,7 +236,7 @@ func update_normal():
 #		# if broke away from platform last tick
 	
 	# raycast to center of platform, get impact normal
-	normal_raycast.cast_to = (platform.global_position - global_position).rotated(-rotation)
+	normal_raycast.cast_to = normal_raycast.to_local(platform.global_position)
 	platform_normal = normal_raycast.get_collision_normal()
 #	$Sprite.global_position = normal_raycast.get_collision_point() + platform_normal
 
