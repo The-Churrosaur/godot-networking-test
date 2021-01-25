@@ -115,7 +115,7 @@ func _physics_process(delta):
 		
 		# set dv to physics dummy velocity
 		#displacement = physics_dummy_instance.linear_velocity
-		displacement = .to_local(physics_dummy_instance.global_position) * 60
+		displacement = (physics_dummy_instance.global_position - global_position) * 60
 			
 		# if in grav, rotate feet to planet
 		rotate_towards_grav()
