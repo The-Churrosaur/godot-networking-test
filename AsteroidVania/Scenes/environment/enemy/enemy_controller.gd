@@ -104,7 +104,7 @@ func on_player_hit(body):
 	
 	if body.is_in_group("PlayerBullet"):
 		print("ENEMY HIT")
-		health.change_health(-1)
+		health.change_health(-body.damage)
 		temp_hitflash()
 
 # RAYCAST

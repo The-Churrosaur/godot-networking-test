@@ -1,16 +1,19 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Scenes/character/weapons/weapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/character/weapons/guns/smg.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/character/hud/hud.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/environment/player_camera.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/character/player_controller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/character/BlueTest/Rig.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/character/kinematic_character.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/character/weapons/guns/battle_rifle.tscn" type="PackedScene" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/character/player_base.gd" type="Script" id=10]
 [ext_resource path="res://Scenes/character/weapons/grapple_gun.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/character/character_health.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/character/weapons/guns/shotgun.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/character/weapons/guns/rail_rifle.tscn" type="PackedScene" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
 height = 30.0
@@ -33,30 +36,22 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.1366, 34.8241 )
+position = Vector2( 86.2437, 37.1344 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.144719
+rotation = -0.200788
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.64832
+rotation = -0.690386
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.48003, 4.99333 )
-rotation = 0.590181
+position = Vector2( -6.39428, 4.66717 )
+rotation = 0.5729
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.51048
+rotation = -1.53023
 
-[node name="Weapon" parent="KinematicCharacter" instance=ExtResource( 1 )]
-muzzle_path = NodePath("Muzzle")
-shooter_path = NodePath("..")
-muzzle_vel = 500.0
-cycle_interval = 0.15
-inherit_velocity = true
-velocity_minimum = true
-
-[node name="Muzzle" type="Node2D" parent="KinematicCharacter/Weapon"]
+[node name="Muzzle" type="Node2D" parent="KinematicCharacter"]
 position = Vector2( 28.1799, -37.5189 )
 rotation = 0.00180601
 
@@ -87,10 +82,26 @@ muzzle_vel = 1500.0
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter/GrappleGun"]
 position = Vector2( 0, -45.5628 )
 
+[node name="WeaponSMG" parent="KinematicCharacter" instance=ExtResource( 1 )]
+muzzle_path = NodePath("../Muzzle")
+shooter_path = NodePath("..")
+
+[node name="WeaponBR" parent="KinematicCharacter" instance=ExtResource( 7 )]
+muzzle_path = NodePath("../Muzzle")
+shooter_path = NodePath("..")
+
+[node name="WeaponSG" parent="KinematicCharacter" instance=ExtResource( 13 )]
+muzzle_path = NodePath("../Muzzle")
+shooter_path = NodePath("..")
+
+[node name="WeaponRR" parent="KinematicCharacter" instance=ExtResource( 14 )]
+muzzle_path = NodePath("../Muzzle")
+shooter_path = NodePath("..")
+
 [node name="PlayerController" parent="." instance=ExtResource( 4 )]
 character_path = NodePath("../KinematicCharacter")
 anim_path = NodePath("../KinematicCharacter/Rig/AnimationTree")
-weapon_path = NodePath("../KinematicCharacter/Weapon")
+weapon_path = NodePath("../KinematicCharacter/WeaponSMG")
 grapple_path = NodePath("../KinematicCharacter/GrappleGun")
 camera_path = NodePath("../PlayerCamera")
 

@@ -11,6 +11,7 @@ export var num_projectiles = 1
 export var spread = 0.1
 export var inherit_velocity = false
 export var velocity_minimum = false # if inherit velocity, absolute velocity will not drop below impulse 
+export var recoil_shake = 10
 
 # bullet handler
 
@@ -35,6 +36,9 @@ onready var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 # assigns bullet to group
 var bullet_group = null
+
+# signals 
+signal weapon_recoiled(amplitude)
 
 func _ready():
 	
@@ -117,6 +121,7 @@ func try_fire():
 		
 		for i in num_projectiles:
 			fire_projectile()
+		emit_signal("weapon_recoiled", recoil_shake)
 		
 		in_battery = false
 		

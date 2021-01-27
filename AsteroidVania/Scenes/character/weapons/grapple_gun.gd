@@ -2,6 +2,7 @@ class_name GrappleGun
 extends Weapon
 
 export var player_path : NodePath = ".."
+export var controller_path : NodePath = "../../PlayerController"
 # force increases with scale by distance^2 beyond length
 export var grapple_length = 30.0
 export var grapple_impulse = 10.0
@@ -10,8 +11,10 @@ export var grapple_max_impulse = 20
 export var reel_velocity = 1
 export var min_length = 20.0 # cuts off 
 export var max_distance = 1000
+export var invul_time = 0.7
 
 onready var player = get_node(player_path)
+onready var controller = get_node(controller_path)
 onready var line = $Line2D
 var player_dummy : RigidBody2D
 var grapple_body : PhysicsBody2D
@@ -89,6 +92,10 @@ func start_grapple():
 	is_grappling = true
 	line.visible = true
 	player.maneuver_enabled = true
+	
+	# temp invul on start grapple (see how it feels)
+	controller.invul(invul_time)
+
 
 func on_bullet_impact(bullet, body):
 	.on_bullet_impact(bullet, body)

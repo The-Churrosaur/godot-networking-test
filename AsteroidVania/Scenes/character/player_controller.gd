@@ -43,6 +43,7 @@ func _ready():
 	
 	# weapon setup
 	weapon.bullet_group = "PlayerBullet"
+	weapon.connect("weapon_recoiled", self, "on_weapon_recoiled")
 
 # inputs do be handled here
 func _input(event):
@@ -111,6 +112,11 @@ func jump():
 	character.should_jump = true
 	
 	invul(invul_time)
+	
+	# shake camera make this a trigger from kinchar
+	if !character.on_platform:
+		camera.shaker.shake_rot(0.02, 0.15, 0.3)
+		camera.shaker.shake_pos(20, 0.15, 0.3)
 	
 	character.get_node("JetLight").visible = true
 	yield(get_tree().create_timer(0.1), "timeout")
@@ -182,3 +188,10 @@ func temp_hitflash():
 	sprite.visible = true
 	yield(get_tree().create_timer(0.2), "timeout")
 	sprite.visible = false
+
+# recoil weapon
+func on_weapon_recoiled(amp):
+	print("recoiling")
+	# shake camera
+	camera.shaker.shake_rot(0.01, 0.1, 0.3)
+	camera.shaker.shake_pos(10, 0.1, 0.3)

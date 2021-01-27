@@ -4,6 +4,7 @@ extends RigidBody2D
 export var impact_impulse = 100000
 export var life_time = 5.0
 export var activation_time = 0.2 # dead time before bullet activates
+export var damage = 1
 
 signal bullet_removed(bullet, id)
 signal bullet_impacted(bullet, body)
