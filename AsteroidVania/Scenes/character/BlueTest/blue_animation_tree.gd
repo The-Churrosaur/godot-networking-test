@@ -1,8 +1,7 @@
 extends AnimationTree
 
+onready var rig = get_parent()
 onready var tween = $Tween
-
-
 
 func face_direction(dir : float = 0.0, tween_blend = false, tween_time = 0.2):
 	
@@ -36,3 +35,7 @@ func floating_standing( blend : float = 0.0, tween_blend = false, tween_time = 0
 			)
 	else:
 		set("parameters/floating_standing_blend/blend_amount", blend)
+
+func aiming(point : Vector2):
+	set("parameters/gun_rotate_blend/blend_amount", 0.5)
+	rig.rotate_arm_to(point)

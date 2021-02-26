@@ -1,7 +1,7 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/character/BlueTest/Bluestronaut_uv_128.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/character/BlueTest/Rig.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/character/BlueTest/blue_rig.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/character/BlueTest/test_normal_shader.tres" type="Material" id=3]
 [ext_resource path="res://Scenes/character/BlueTest/anims/walk.tres" type="Animation" id=4]
 [ext_resource path="res://Scenes/character/BlueTest/anims/walk_discrete.tres" type="Animation" id=5]
@@ -14,64 +14,148 @@
 [ext_resource path="res://Scenes/character/BlueTest/blue_animation_tree.gd" type="Script" id=12]
 [ext_resource path="res://Scenes/character/BlueTest/Tween.gd" type="Script" id=13]
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=1]
+resource_name = "GunRotate"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Skeleton2D/hip/chest/shoulderL/elbowL/handL:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 20.2215, -1.66095 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Skeleton2D/hip/chest/shoulderL/elbowL/handL:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -13.5119 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Skeleton2D/hip/chest/shoulderL:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 11.1276, -11.6258 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Skeleton2D/hip/chest/shoulderL:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 89.7725 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Skeleton2D/hip/chest/shoulderL/elbowL:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 20.0948, 3.83398 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Skeleton2D/hip/chest/shoulderL/elbowL:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 20.2082 ]
+}
 
-[sub_resource type="AnimationNodeBlend2" id=5]
+[sub_resource type="Animation" id=2]
+
+[sub_resource type="AnimationNodeBlend2" id=3]
 filter_enabled = true
 filters = [ ".:scale" ]
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=4]
 animation = "Float"
 
-[sub_resource type="AnimationNodeBlend2" id=12]
+[sub_resource type="AnimationNodeBlend2" id=5]
 
-[sub_resource type="AnimationNodeAnimation" id=7]
-animation = "FaceLeftBlend"
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "GunRotate"
+
+[sub_resource type="AnimationNodeBlend2" id=7]
 
 [sub_resource type="AnimationNodeAnimation" id=8]
+animation = "FaceLeftBlend"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "FaceRightBlend"
 
-[sub_resource type="AnimationNodeBlendSpace1D" id=9]
-blend_point_0/node = SubResource( 7 )
+[sub_resource type="AnimationNodeBlendSpace1D" id=10]
+blend_point_0/node = SubResource( 8 )
 blend_point_0/pos = -0.9
-blend_point_1/node = SubResource( 8 )
+blend_point_1/node = SubResource( 9 )
 blend_point_1/pos = 0.9
 
-[sub_resource type="AnimationNodeAnimation" id=13]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "StandIdle"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "Run"
 
-[sub_resource type="AnimationNodeBlendSpace1D" id=15]
-blend_point_0/node = SubResource( 13 )
+[sub_resource type="AnimationNodeBlendSpace1D" id=13]
+blend_point_0/node = SubResource( 11 )
 blend_point_0/pos = -0.9
-blend_point_1/node = SubResource( 14 )
+blend_point_1/node = SubResource( 12 )
 blend_point_1/pos = 0.9
 
-[sub_resource type="AnimationNodeBlendTree" id=6]
-graph_offset = Vector2( -200.717, 54.625 )
-nodes/facing_blend/node = SubResource( 5 )
-nodes/facing_blend/position = Vector2( 400, 60 )
-nodes/floating/node = SubResource( 11 )
-nodes/floating/position = Vector2( -20, 160 )
-nodes/floating_standing_blend/node = SubResource( 12 )
-nodes/floating_standing_blend/position = Vector2( 140, 40 )
-nodes/left_right_blend/node = SubResource( 9 )
-nodes/left_right_blend/position = Vector2( 390, 240 )
+[sub_resource type="AnimationNodeBlendTree" id=14]
+graph_offset = Vector2( -97.2569, -0.5 )
+nodes/facing_blend/node = SubResource( 3 )
+nodes/facing_blend/position = Vector2( 210, 40 )
+nodes/floating/node = SubResource( 4 )
+nodes/floating/position = Vector2( -250, 160 )
+nodes/floating_standing_blend/node = SubResource( 5 )
+nodes/floating_standing_blend/position = Vector2( -50, 40 )
+nodes/gun_rotate/node = SubResource( 6 )
+nodes/gun_rotate/position = Vector2( 410, 210 )
+nodes/gun_rotate_blend/node = SubResource( 7 )
+nodes/gun_rotate_blend/position = Vector2( 390, 40 )
+nodes/left_right_blend/node = SubResource( 10 )
+nodes/left_right_blend/position = Vector2( 200, 220 )
 nodes/output/position = Vector2( 590, 110 )
-nodes/run_stand_blend/node = SubResource( 15 )
-nodes/run_stand_blend/position = Vector2( -50, 40 )
-node_connections = [ "output", 0, "facing_blend", "facing_blend", 0, "floating_standing_blend", "facing_blend", 1, "left_right_blend", "floating_standing_blend", 0, "run_stand_blend", "floating_standing_blend", 1, "floating" ]
+nodes/run_stand_blend/node = SubResource( 13 )
+nodes/run_stand_blend/position = Vector2( -250, 40 )
+node_connections = [ "output", 0, "gun_rotate_blend", "gun_rotate_blend", 0, "facing_blend", "gun_rotate_blend", 1, "gun_rotate", "floating_standing_blend", 0, "run_stand_blend", "floating_standing_blend", 1, "floating", "facing_blend", 0, "floating_standing_blend", "facing_blend", 1, "left_right_blend" ]
 
 [node name="Rig" type="Node2D"]
 scale = Vector2( -1, 1 )
+script = ExtResource( 2 )
 
 [node name="Dolly" type="Node2D" parent="."]
 position = Vector2( 0.137009, 0.983501 )
 rotation = 0.000902968
 scale = Vector2( -1, 1 )
-script = ExtResource( 2 )
 
 [node name="Polygons" type="Node2D" parent="Dolly"]
 material = ExtResource( 3 )
@@ -148,7 +232,7 @@ bones = [ NodePath("hip"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePa
 position = Vector2( -86.3438, -45.5328 )
 
 [node name="hip" type="Bone2D" parent="Dolly/Skeleton2D"]
-position = Vector2( 86.2836, 37.9948 )
+position = Vector2( 86.0951, 33.9303 )
 rotation = -0.257991
 rest = Transform2D( 1, 0, 0, 1, 79.0557, 43.3478 )
 
@@ -159,7 +243,7 @@ rest = Transform2D( 1, 0, 0, 1, -0.166122, -15.944 )
 
 [node name="shoulderL" type="Bone2D" parent="Dolly/Skeleton2D/hip/chest"]
 position = Vector2( 11.1276, -11.6258 )
-rotation = 1.93813
+rotation = 1.56683
 rest = Transform2D( 1, 0, 0, 1, 11.1276, -11.6258 )
 __meta__ = {
 "_edit_bone_": true
@@ -167,7 +251,7 @@ __meta__ = {
 
 [node name="elbowL" type="Bone2D" parent="Dolly/Skeleton2D/hip/chest/shoulderL"]
 position = Vector2( 20.0948, 3.83398 )
-rotation = 1.03452
+rotation = 0.352699
 rest = Transform2D( 1, 0, 0, 1, 20.0948, 3.83398 )
 __meta__ = {
 "_edit_bone_": true
@@ -175,10 +259,13 @@ __meta__ = {
 
 [node name="handL" type="Bone2D" parent="Dolly/Skeleton2D/hip/chest/shoulderL/elbowL"]
 position = Vector2( 20.2215, -1.66095 )
+rotation = -0.235826
 rest = Transform2D( 1, 0, 0, 1, 20.2215, -1.66095 )
 __meta__ = {
 "_edit_bone_": true
 }
+
+[node name="HandLRemote" type="RemoteTransform2D" parent="Dolly/Skeleton2D/hip/chest/shoulderL/elbowL/handL"]
 
 [node name="shoulderR" type="Bone2D" parent="Dolly/Skeleton2D/hip/chest"]
 position = Vector2( -8.47025, -8.30417 )
@@ -204,6 +291,9 @@ __meta__ = {
 "_edit_bone_": true
 }
 
+[node name="HandRRemote" type="RemoteTransform2D" parent="Dolly/Skeleton2D/hip/chest/shoulderR/elbowR/handR"]
+use_global_coordinates = false
+
 [node name="neck" type="Bone2D" parent="Dolly/Skeleton2D/hip/chest"]
 position = Vector2( -0.793793, -12.6782 )
 rotation = 0.0820141
@@ -216,7 +306,7 @@ rest = Transform2D( 1, 0, 0, 1, 0.715363, -7.95486 )
 
 [node name="hipL" type="Bone2D" parent="Dolly/Skeleton2D/hip"]
 position = Vector2( 1.27493, 4.47816 )
-rotation = -0.22167
+rotation = -0.123027
 rest = Transform2D( 1, 0, 0, 1, 4.1713, 1.55989 )
 __meta__ = {
 "_edit_bone_": true,
@@ -225,7 +315,7 @@ __meta__ = {
 
 [node name="kneeL" type="Bone2D" parent="Dolly/Skeleton2D/hip/hipL"]
 position = Vector2( 5.23389, 23.9714 )
-rotation = -0.706052
+rotation = -0.632046
 rest = Transform2D( 0.997978, 0.0635535, -0.0635535, 0.997978, 5.23389, 23.9714 )
 __meta__ = {
 "_edit_bone_": true
@@ -248,8 +338,8 @@ __meta__ = {
 }
 
 [node name="hipR" type="Bone2D" parent="Dolly/Skeleton2D/hip"]
-position = Vector2( -6.06052, 3.39767 )
-rotation = 0.505641
+position = Vector2( -6.96213, 6.82708 )
+rotation = 0.687334
 rest = Transform2D( 1, 0, 0, 1, -6.25122, 3.65421 )
 __meta__ = {
 "_edit_bone_": true,
@@ -258,7 +348,7 @@ __meta__ = {
 
 [node name="kneeR" type="Bone2D" parent="Dolly/Skeleton2D/hip/hipR"]
 position = Vector2( -5.32269, 21.896 )
-rotation = -1.60712
+rotation = -1.39941
 rest = Transform2D( 0.997978, 0.0635535, -0.0635535, 0.997978, -5.32269, 21.896 )
 __meta__ = {
 "_edit_bone_": true
@@ -290,18 +380,20 @@ playback_speed = 2.0
 anims/FaceLeftBlend = ExtResource( 10 )
 anims/FaceRightBlend = ExtResource( 11 )
 anims/Float = ExtResource( 7 )
-anims/OneHandGun = SubResource( 10 )
+anims/GunRotate = SubResource( 1 )
+anims/OneHandGun = SubResource( 2 )
 anims/Run = ExtResource( 8 )
 anims/StandIdle = ExtResource( 9 )
 anims/Walk = ExtResource( 4 )
 anims/WalkDiscrete = ExtResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 6 )
+tree_root = SubResource( 14 )
 anim_player = NodePath("../Dolly/AnimationPlayer")
 active = true
 parameters/facing_blend/blend_amount = 1.0
 parameters/floating_standing_blend/blend_amount = 1.0
+parameters/gun_rotate_blend/blend_amount = 0.0
 parameters/left_right_blend/blend_position = 1.0
 parameters/run_stand_blend/blend_position = 0.0
 script = ExtResource( 12 )

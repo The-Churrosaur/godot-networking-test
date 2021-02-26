@@ -73,6 +73,7 @@ onready var hit_area : Area2D = get_node(hit_area_path)
 # animation
 
 onready var animator = get_node(animator_path)
+var face_velocity = true
 
 # signals
 
@@ -285,10 +286,11 @@ func update_movement_animation():
 		animator.floating_standing(1, true)
 	
 	# flip
-	if velocity.rotated(-rotation).x > 0 && velocity.length_squared() > 10 * 10:
-		animator.face_direction(1, true, 0.01)
-	else:
-		animator.face_direction(-1, true, 0.01)
+	if face_velocity:
+		if velocity.rotated(-rotation).x > 0 && velocity.length_squared() > 10 * 10:
+			animator.face_direction(1, true, 0.01)
+		else:
+			animator.face_direction(-1, true, 0.01)
 
 
 

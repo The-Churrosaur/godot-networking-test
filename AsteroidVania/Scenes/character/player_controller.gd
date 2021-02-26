@@ -2,7 +2,9 @@ class_name PlayerController
 extends Node2D
 
 export var character_path : NodePath
-export var anim_path : NodePath = "../KinematicCharacter/Rig/AnimationPlayer"
+export var anim_path : NodePath
+export var rig_path : NodePath
+
 export var weapon_path : NodePath
 export var grapple_path : NodePath
 
@@ -20,14 +22,18 @@ export var dodging = false # while true, ignores bullets
 # the controlees
 
 # watch for circular reference
-onready var character : KinematicCharacter = get_node(character_path)
-onready var animator : AnimationPlayer = get_node(anim_path)
+onready var character : Node2D = get_node(character_path)
+onready var animator : AnimationTree = get_node(anim_path)
+onready var rig : Node2D = get_node(rig_path)
+
 onready var weapon = get_node(weapon_path)
 onready var grapple = get_node(grapple_path)
 
 onready var camera = get_node(camera_path)
 onready var hud : CanvasLayer = get_node(hud_path)
 onready var health = get_node(health_path)
+
+var shooting = false
 
 # camera relative magwalk directions, set when player enters platform
 # dynamically resetting is unintuitive
@@ -42,8 +48,7 @@ func _ready():
 	character.connect("player_hit", self, "on_player_hit")
 	
 	# weapon setup
-	weapon.bullet_group = "PlayerBullet"
-	weapon.connect("weapon_recoiled", self, "on_weapon_recoiled")
+	equip_weapon(weapon)
 
 # inputs do be handled here
 func _input(event):
@@ -97,8 +102,10 @@ func _input(event):
 	
 	if event.is_action_pressed("ui_select"):
 		weapon.pull_trigger()
+		shooting = true
 	if event.is_action_released("ui_select"):
 		weapon.release_trigger()
+		shooting = false
 	
 	if event.is_action_pressed("ui_alt_select"):
 		grapple.pull_trigger()
@@ -133,6 +140,23 @@ func _process(delta):
 	weapon.target = get_global_mouse_position()
 	grapple.target = get_global_mouse_position()
 	
+	# character anim face towards mouse while shooting
+	if shooting:
+		character.face_velocity = false
+		print("flipping on mouse")
+		var towards = character.get_local_mouse_position()
+		if towards.x > 0 && towards.length_squared() > 10 * 10:
+			animator.face_direction(1, true, 0.01)
+		else:
+			animator.face_direction(-1, true, 0.01)
+	# else anim face by velocity
+	else:
+		character.face_velocity = true
+	
+	# aim weapon animation
+	animator.aiming(get_global_mouse_position())
+	
+	# mouse camera rotation test
 	if !character.on_platform && mouse_camera_rotation:
 		var view = hud.get_viewport()
 		character.rotation = (view.get_mouse_position() - view.size / 2).angle()
@@ -176,6 +200,9 @@ func on_player_hit(body):
 		temp_hitflash()
 		health.change_health(-1)
 		body.impact(character)
+		
+		camera.shaker.shake_rot(0.02, 0.11, 0.5)
+		camera.shaker.shake_pos(10, 0.11, 0.5)
 	
 	# if medpack
 	if body.is_in_group("Pickup"):
@@ -195,3 +222,11 @@ func on_weapon_recoiled(amp):
 	# shake camera
 	camera.shaker.shake_rot(0.01, 0.1, 0.3)
 	camera.shaker.shake_pos(10, 0.1, 0.3)
+
+# equip weapon
+func equip_weapon(new_weapon : Node2D):
+	new_weapon.bullet_group = "PlayerBullet"
+	new_weapon.connect("weapon_recoiled", self, "on_weapon_recoiled")
+	weapon = new_weapon
+	# equip to rig
+	rig.parent_to_left_hand(new_weapon.get_path())
