@@ -18,12 +18,12 @@ inherit_velocity = true
 velocity_minimum = true
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 3.72575, 4.53571 )
+position = Vector2( 22.0306, 6.96555 )
 scale = Vector2( -0.8, -0.8 )
 texture = ExtResource( 2 )
 
 [node name="JetLight" parent="." instance=ExtResource( 5 )]
-position = Vector2( 21.3826, -0.0200195 )
+position = Vector2( 33.5318, -0.0200195 )
 enabled = false
 texture_scale = 2.0
 energy = 7.43
@@ -31,4 +31,4 @@ script = ExtResource( 4 )
 weapon_path = NodePath("..")
 
 [node name="Muzzle" type="Node2D" parent="."]
-position = Vector2( 21.5446, 0 )
+position = Vector2( 33.0459, 0 )
