@@ -19,6 +19,10 @@ position = Vector2( -0.270538, -47.0762 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="JetLight" parent="." index="3" instance=ExtResource( 5 )]
+enabled = false
+texture_scale = 1.0
+color = Color( 0.764706, 0.588235, 0.12549, 1 )
+energy = 8.42
 
 [node name="Hitbox" type="Area2D" parent="." index="4"]
 position = Vector2( 0, -18.7707 )

@@ -139,9 +139,10 @@ func jump():
 		camera.shaker.shake_rot(0.02, 0.15, 0.3)
 		camera.shaker.shake_pos(20, 0.15, 0.3)
 	
-	character.get_node("JetLight").visible = true
+	character.get_node("JetLight").enabled = true
+	print("jetflash")
 	yield(get_tree().create_timer(0.1), "timeout")
-	character.get_node("JetLight").visible = false
+	character.get_node("JetLight").enabled = false
 
 func invul(time : float):
 	dodging = true

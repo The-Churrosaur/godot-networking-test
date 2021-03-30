@@ -308,7 +308,7 @@ func update_teleport():
 
 func enter_platform(collision : KinematicCollision2D):
 	
-	print("entering platform: ", collision.normal)
+	print(name, " entering platform: ", collision.normal)
 	platform = collision.collider
 	platform_normal = collision.normal
 	platform_collision = collision
