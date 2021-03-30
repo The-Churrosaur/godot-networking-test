@@ -147,7 +147,7 @@ nodes/left_right_blend/position = Vector2( 200, 220 )
 nodes/output/position = Vector2( 590, 110 )
 nodes/run_stand_blend/node = SubResource( 13 )
 nodes/run_stand_blend/position = Vector2( -250, 40 )
-node_connections = [ "output", 0, "gun_rotate_blend", "gun_rotate_blend", 0, "facing_blend", "gun_rotate_blend", 1, "gun_rotate", "facing_blend", 0, "floating_standing_blend", "facing_blend", 1, "left_right_blend", "floating_standing_blend", 0, "run_stand_blend", "floating_standing_blend", 1, "floating" ]
+node_connections = [ "output", 0, "gun_rotate_blend", "gun_rotate_blend", 0, "facing_blend", "gun_rotate_blend", 1, "gun_rotate", "floating_standing_blend", 0, "run_stand_blend", "floating_standing_blend", 1, "floating", "facing_blend", 0, "floating_standing_blend", "facing_blend", 1, "left_right_blend" ]
 
 [node name="Rig" type="Node2D"]
 scale = Vector2( -1, 1 )
@@ -233,7 +233,7 @@ bones = [ NodePath("hip"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePa
 position = Vector2( -86.3438, -45.5328 )
 
 [node name="hip" type="Bone2D" parent="Dolly/Skeleton2D"]
-position = Vector2( 86.2244, 36.7183 )
+position = Vector2( 86.1454, 35.0136 )
 rotation = -0.257991
 rest = Transform2D( 1, 0, 0, 1, 79.0557, 43.3478 )
 
@@ -307,7 +307,7 @@ rest = Transform2D( 1, 0, 0, 1, 0.715363, -7.95486 )
 
 [node name="hipL" type="Bone2D" parent="Dolly/Skeleton2D/hip"]
 position = Vector2( 1.27493, 4.47816 )
-rotation = -0.190691
+rotation = -0.149318
 rest = Transform2D( 1, 0, 0, 1, 4.1713, 1.55989 )
 __meta__ = {
 "_edit_bone_": true,
@@ -316,7 +316,7 @@ __meta__ = {
 
 [node name="kneeL" type="Bone2D" parent="Dolly/Skeleton2D/hip/hipL"]
 position = Vector2( 5.23389, 23.9714 )
-rotation = -0.68281
+rotation = -0.651771
 rest = Transform2D( 0.997978, 0.0635535, -0.0635535, 0.997978, 5.23389, 23.9714 )
 __meta__ = {
 "_edit_bone_": true
@@ -339,8 +339,8 @@ __meta__ = {
 }
 
 [node name="hipR" type="Bone2D" parent="Dolly/Skeleton2D/hip"]
-position = Vector2( -6.46942, 4.95297 )
-rotation = 0.588042
+position = Vector2( -6.45265, 4.88919 )
+rotation = 0.584663
 rest = Transform2D( 1, 0, 0, 1, -6.25122, 3.65421 )
 __meta__ = {
 "_edit_bone_": true,
@@ -349,7 +349,7 @@ __meta__ = {
 
 [node name="kneeR" type="Bone2D" parent="Dolly/Skeleton2D/hip/hipR"]
 position = Vector2( -5.32269, 21.896 )
-rotation = -1.51292
+rotation = -1.51678
 rest = Transform2D( 0.997978, 0.0635535, -0.0635535, 0.997978, -5.32269, 21.896 )
 __meta__ = {
 "_edit_bone_": true

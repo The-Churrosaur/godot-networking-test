@@ -34,8 +34,8 @@ func _ready():
 	life_timer.connect("timeout", self, "on_life_timer")
 	life_timer.start(life_time)
 	
-	activation_timer.connect("timeout", self, "on_activation_timer")
-	activation_timer.start(activation_time)
+	yield(get_tree().create_timer(activation_time), "timeout")
+	on_activation_timer()
 	
 
 func on_life_timer():

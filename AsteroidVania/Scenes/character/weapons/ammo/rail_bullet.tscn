@@ -31,7 +31,7 @@ position = Vector2( 0.125343, 0 )
 collision_layer = 2
 linear_damp = 0.0
 script = ExtResource( 2 )
-activation_time = 0.1
+activation_time = 0.0
 damage = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

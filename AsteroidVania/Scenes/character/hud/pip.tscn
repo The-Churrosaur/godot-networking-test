@@ -6,7 +6,7 @@
 margin_left = 410.0
 margin_right = 442.0
 margin_bottom = 112.0
-rect_min_size = Vector2( 32, 32 )
+rect_min_size = Vector2( 16, 16 )
 texture = ExtResource( 1 )
 stretch_mode = 5
 __meta__ = {

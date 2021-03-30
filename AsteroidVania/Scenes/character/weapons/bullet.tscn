@@ -31,7 +31,7 @@ position = Vector2( 0.125343, 0 )
 collision_layer = 2
 linear_damp = 0.0
 script = ExtResource( 2 )
-activation_time = 0.1
+activation_time = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -50,7 +50,4 @@ explosiveness = 0.52
 process_material = SubResource( 2 )
 
 [node name="LifeTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="ActivationTimer" type="Timer" parent="."]
 one_shot = true

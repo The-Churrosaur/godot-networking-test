@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/character/weapons/weapon.gd" type="Script" id=1]
-[ext_resource path="res://assets/f24_rifle.png" type="Texture" id=2]
+[ext_resource path="res://assets/f24_BR.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/character/weapons/ammo/rifle_bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/character/muzzle_light.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/character/JetLight.tscn" type="PackedScene" id=5]
@@ -9,6 +9,7 @@
 [node name="WeaponBR" type="Node2D"]
 script = ExtResource( 1 )
 bullet_prefab = ExtResource( 3 )
+muzzle_path = NodePath("Muzzle")
 muzzle_vel = 1000.0
 cycle_interval = 0.35
 is_automatic = true
@@ -17,14 +18,20 @@ inherit_velocity = true
 velocity_minimum = true
 
 [node name="Sprite" type="Sprite" parent="."]
-visible = false
-scale = Vector2( 0.1, 0.1 )
+position = Vector2( 3.38655, -15.3698 )
+scale = Vector2( -0.6, -0.6 )
 texture = ExtResource( 2 )
 
 [node name="JetLight" parent="." instance=ExtResource( 5 )]
+position = Vector2( 33.8818, 0.346436 )
 enabled = false
 texture_scale = 2.0
 color = Color( 0.764706, 0.501961, 0.12549, 1 )
 energy = 8.42
 script = ExtResource( 4 )
 weapon_path = NodePath("..")
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2( 34.085, 0.338684 )
+rotation = 3.14159
+scale = Vector2( 0.2, 0.2 )

@@ -17,13 +17,13 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 212.791, 10 )
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=2]
 radius = 473.801
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=3]
 radius = 1000.0
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 140, 140 )
 
 [node name="Node2D" type="Node2D"]
@@ -72,7 +72,7 @@ collision_layer = 9
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="KinematicBody2D"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="KinematicBody2D" groups=[
 "GravityArea",
@@ -83,7 +83,7 @@ collision_layer = 3
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D/Area2D"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 scale = Vector2( 0.3, 0.3 )
@@ -105,7 +105,7 @@ position = Vector2( 1054.21, 301.428 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1263.75, -251.481 )
@@ -114,7 +114,7 @@ initial_velocity_angular = 0.2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform2" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform4" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1828.33, 126.688 )
@@ -123,7 +123,7 @@ initial_velocity_angular = 0.2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform4" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform3" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1678.77, 809.046 )
@@ -131,7 +131,7 @@ position = Vector2( 1678.77, 809.046 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform3" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform5" parent="." instance=ExtResource( 6 )]
 position = Vector2( -432.219, 584.565 )
@@ -140,7 +140,7 @@ initial_velocity = Vector2( 10, 0 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform5" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform6" parent="." instance=ExtResource( 6 )]
 position = Vector2( -639.433, -762.322 )
@@ -148,7 +148,7 @@ position = Vector2( -639.433, -762.322 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform6" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform7" parent="." instance=ExtResource( 6 )]
 position = Vector2( 392.317, -399.698 )
@@ -156,7 +156,7 @@ position = Vector2( 392.317, -399.698 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform7" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform8" parent="." instance=ExtResource( 6 )]
 position = Vector2( 461.387, 1033.53 )
@@ -164,7 +164,7 @@ position = Vector2( 461.387, 1033.53 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform8" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform9" parent="." instance=ExtResource( 6 )]
 position = Vector2( -1299.93, -257.239 )
@@ -172,7 +172,7 @@ position = Vector2( -1299.93, -257.239 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform9" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="DummyPlatform10" parent="." instance=ExtResource( 6 )]
 position = Vector2( -1299.93, 852.215 )
@@ -180,7 +180,7 @@ position = Vector2( -1299.93, 852.215 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DummyPlatform10" groups=[
 "PhysicsPlatformCollider",
 ]]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( -1460.48, -1866.16 )

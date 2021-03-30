@@ -15,15 +15,15 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="Hud"]
 anchor_right = 1.0
-margin_top = 30.0
+margin_top = 16.0
 margin_bottom = 128.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="JumpPips" type="HBoxContainer" parent="Hud/MarginContainer"]
-margin_right = 960.0
-margin_bottom = 98.0
+margin_right = 480.0
+margin_bottom = 112.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false

@@ -4,7 +4,7 @@ extends Control
 # tracks target health node
 export var char_health_path : NodePath
 export var health_box_path : NodePath = "/MarginContainer/HBoxContainer"
-export var health_pip_resource : PackedScene  = preload("res://Scenes/character/hud/health_pip.tscn")
+export var health_pip_resource : PackedScene  = preload("res://Scenes/character/hud/health_pip_small.tscn")
 
 onready var char_health = get_node(char_health_path)
 onready var health_box = get_node(health_box_path)

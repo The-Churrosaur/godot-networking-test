@@ -36,20 +36,20 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.0683, 33.351 )
+position = Vector2( 86.2925, 38.1878 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.10897
+rotation = -0.226353
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.6215
+rotation = -0.709566
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.69284, 5.8028 )
-rotation = 0.633067
+position = Vector2( -6.06052, 3.39767 )
+rotation = 0.505641
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.46145
+rotation = -1.60712
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter"]
 position = Vector2( 28.1799, -37.5189 )
@@ -83,17 +83,21 @@ muzzle_vel = 1500.0
 position = Vector2( 0, -45.5628 )
 
 [node name="WeaponSMG" parent="KinematicCharacter" instance=ExtResource( 1 )]
+visible = false
 shooter_path = NodePath("..")
 
 [node name="WeaponBR" parent="KinematicCharacter" instance=ExtResource( 7 )]
+visible = false
 muzzle_path = NodePath("../Muzzle")
 shooter_path = NodePath("..")
 
 [node name="WeaponSG" parent="KinematicCharacter" instance=ExtResource( 13 )]
+visible = false
 muzzle_path = NodePath("../Muzzle")
 shooter_path = NodePath("..")
 
 [node name="WeaponRR" parent="KinematicCharacter" instance=ExtResource( 14 )]
+visible = false
 muzzle_path = NodePath("../Muzzle")
 shooter_path = NodePath("..")
 
@@ -101,7 +105,7 @@ shooter_path = NodePath("..")
 character_path = NodePath("../KinematicCharacter")
 anim_path = NodePath("../KinematicCharacter/Rig/AnimationTree")
 rig_path = NodePath("../KinematicCharacter/Rig")
-weapon_paths = [ NodePath("../KinematicCharacter/WeaponSMG"), NodePath("../KinematicCharacter/WeaponBR"), NodePath("../KinematicCharacter/WeaponSG"), NodePath("../KinematicCharacter/WeaponRR") ]
+weapon_paths = [ NodePath("../KinematicCharacter/WeaponBR"), NodePath("../KinematicCharacter/WeaponSMG"), NodePath("../KinematicCharacter/WeaponSG"), NodePath("../KinematicCharacter/WeaponRR") ]
 grapple_path = NodePath("../KinematicCharacter/GrappleGun")
 camera_path = NodePath("../PlayerCamera")
 
