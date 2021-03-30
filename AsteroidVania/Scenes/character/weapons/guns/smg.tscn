@@ -16,7 +16,7 @@ inherit_velocity = true
 velocity_minimum = true
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( -0.15, 0.15 )
+scale = Vector2( -0.2, -0.2 )
 texture = ExtResource( 2 )
 
 [node name="Muzzle" type="Node2D" parent="."]

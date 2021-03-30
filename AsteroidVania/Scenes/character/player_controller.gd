@@ -5,7 +5,7 @@ export var character_path : NodePath
 export var anim_path : NodePath
 export var rig_path : NodePath
 
-export var weapon_path : NodePath
+export var weapon_paths = []
 export var grapple_path : NodePath
 
 export var camera_path : NodePath
@@ -26,7 +26,8 @@ onready var character : Node2D = get_node(character_path)
 onready var animator : AnimationTree = get_node(anim_path)
 onready var rig : Node2D = get_node(rig_path)
 
-onready var weapon = get_node(weapon_path)
+onready var weapons = []
+onready var weapon = null
 onready var grapple = get_node(grapple_path)
 
 onready var camera = get_node(camera_path)
@@ -47,7 +48,13 @@ func _ready():
 	character.connect("left_platform", self, "on_player_left_platform")
 	character.connect("player_hit", self, "on_player_hit")
 	
-	# weapon setup
+	# setup weapons array from paths
+	for path in weapon_paths:
+		if path is NodePath: 
+			weapons.append(get_node(path))
+	
+	# setup initial weapon
+	weapon = weapons[0]
 	equip_weapon(weapon)
 
 # inputs do be handled here
@@ -97,7 +104,6 @@ func _input(event):
 	if event.is_action_released("ui_accept"):
 		jump()
 	
-	
 	# shoot
 	
 	if event.is_action_pressed("ui_select"):
@@ -111,6 +117,14 @@ func _input(event):
 		grapple.pull_trigger()
 	if event.is_action_released("ui_alt_select"):
 		grapple.release_trigger()
+	
+	# switch weapon
+	
+	if event.is_action_released("ui_focus_next"):
+		var index = weapons.find(weapon) + 1
+		if index >= weapons.size(): index = 0
+		de_equip_weapon()
+		equip_weapon(weapons[index])
 
 # input handler helpers
 func jump():
@@ -141,9 +155,10 @@ func _process(delta):
 	grapple.target = get_global_mouse_position()
 	
 	# character anim face towards mouse while shooting
+	# testo
+	shooting = true
 	if shooting:
 		character.face_velocity = false
-		print("flipping on mouse")
 		var towards = character.get_local_mouse_position()
 		if towards.x > 0 && towards.length_squared() > 10 * 10:
 			animator.face_direction(1, true, 0.01)
@@ -230,3 +245,9 @@ func equip_weapon(new_weapon : Node2D):
 	weapon = new_weapon
 	# equip to rig
 	rig.parent_to_left_hand(new_weapon.get_path())
+	weapon.visible = true # 'unsheathe' for now
+
+func de_equip_weapon():
+	weapon.release_trigger() # just in case
+	weapon.visible = false # 'sheathing' for now
+	weapon = null

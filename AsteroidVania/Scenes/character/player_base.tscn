@@ -36,20 +36,20 @@ position = Vector2( 0.17944, -16.9724 )
 scale = Vector2( 0.6, 0.6 )
 
 [node name="hip" parent="KinematicCharacter/Rig/Dolly/Skeleton2D" index="0"]
-position = Vector2( 86.2445, 37.1507 )
+position = Vector2( 86.0659, 33.3002 )
 
 [node name="hipL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="1"]
-rotation = -0.201185
+rotation = -0.107735
 
 [node name="kneeL" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipL" index="0"]
-rotation = -0.690683
+rotation = -0.620573
 
 [node name="hipR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip" index="2"]
-position = Vector2( -6.39133, 4.65596 )
-rotation = 0.572306
+position = Vector2( -6.70019, 5.83075 )
+rotation = 0.634548
 
 [node name="kneeR" parent="KinematicCharacter/Rig/Dolly/Skeleton2D/hip/hipR" index="0"]
-rotation = -1.53091
+rotation = -1.45976
 
 [node name="Muzzle" type="Node2D" parent="KinematicCharacter"]
 position = Vector2( 28.1799, -37.5189 )
@@ -83,7 +83,6 @@ muzzle_vel = 1500.0
 position = Vector2( 0, -45.5628 )
 
 [node name="WeaponSMG" parent="KinematicCharacter" instance=ExtResource( 1 )]
-scale = Vector2( -1, -1 )
 shooter_path = NodePath("..")
 
 [node name="WeaponBR" parent="KinematicCharacter" instance=ExtResource( 7 )]
@@ -102,7 +101,7 @@ shooter_path = NodePath("..")
 character_path = NodePath("../KinematicCharacter")
 anim_path = NodePath("../KinematicCharacter/Rig/AnimationTree")
 rig_path = NodePath("../KinematicCharacter/Rig")
-weapon_path = NodePath("../KinematicCharacter/WeaponSMG")
+weapon_paths = [ NodePath("../KinematicCharacter/WeaponSMG"), NodePath("../KinematicCharacter/WeaponBR"), NodePath("../KinematicCharacter/WeaponSG"), NodePath("../KinematicCharacter/WeaponRR") ]
 grapple_path = NodePath("../KinematicCharacter/GrappleGun")
 camera_path = NodePath("../PlayerCamera")
 
