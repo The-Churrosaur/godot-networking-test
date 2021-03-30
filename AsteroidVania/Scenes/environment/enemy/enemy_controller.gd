@@ -14,7 +14,7 @@ export var teleport_distance = 2000
 
 onready var character = get_node(character_path)
 onready var weapon = get_node(weapon_path)
-onready var animator : AnimationPlayer = get_node(anim_path)
+onready var animator : AnimationTree = get_node(anim_path)
 onready var target_manager = get_node(target_manager_path)
 onready var detection_area : Area2D = get_node(detection_area_path)
 onready var health = get_node(health_path)
