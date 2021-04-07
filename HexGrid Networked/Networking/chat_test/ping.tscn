@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Networking/chat_test/ping.gd" type="Script" id=1]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = -1
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Node2D" type="Node2D" parent="Control"]
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
+margin_left = 464.0
+margin_top = 276.0
+margin_right = 559.0
+margin_bottom = 324.0
+
+[node name="Button" type="Button" parent="Control/CenterContainer/VBoxContainer"]
+margin_right = 95.0
+margin_bottom = 20.0
+text = "press to ping"
+
+[node name="LineEdit" type="LineEdit" parent="Control/CenterContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 95.0
+margin_bottom = 48.0

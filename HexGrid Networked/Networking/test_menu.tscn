@@ -1,0 +1,85 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Networking/test_menu.gd" type="Script" id=1]
+[ext_resource path="res://Networking/peer_base.tscn" type="PackedScene" id=2]
+
+[node name="TestMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+margin_left = 412.0
+margin_top = 274.0
+margin_right = 612.0
+margin_bottom = 326.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/MarginContainer"]
+margin_right = 200.0
+margin_bottom = 52.0
+
+[node name="ServerButton" type="Button" parent="CenterContainer/MarginContainer/HBoxContainer"]
+margin_right = 52.0
+margin_bottom = 52.0
+text = "Server"
+
+[node name="ClientButton" type="Button" parent="CenterContainer/MarginContainer/HBoxContainer"]
+margin_left = 56.0
+margin_right = 105.0
+margin_bottom = 52.0
+text = "Client"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer/HBoxContainer"]
+margin_left = 109.0
+margin_right = 200.0
+margin_bottom = 52.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 91.0
+margin_bottom = 24.0
+
+[node name="LineEditIP" type="LineEdit" parent="CenterContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 74.0
+margin_bottom = 24.0
+text = "127.0.0.1"
+expand_to_text_length = true
+
+[node name="Label" type="Label" parent="CenterContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 78.0
+margin_top = 5.0
+margin_right = 91.0
+margin_bottom = 19.0
+text = "IP"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 91.0
+margin_bottom = 52.0
+
+[node name="LineEditPort" type="LineEdit" parent="CenterContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 58.0
+margin_bottom = 24.0
+text = "4500"
+expand_to_text_length = true
+
+[node name="Label" type="Label" parent="CenterContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 62.0
+margin_top = 5.0
+margin_right = 88.0
+margin_bottom = 19.0
+text = "Port"
+
+[node name="PeerBase" parent="." instance=ExtResource( 2 )]
